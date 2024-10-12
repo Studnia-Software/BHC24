@@ -17,6 +17,21 @@ namespace BHC24.Api.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
+            modelBuilder.Entity("AppUserTag", b =>
+                {
+                    b.Property<int>("TagsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TagsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("AppUserTag");
+                });
+
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,6 +288,27 @@ namespace BHC24.Api.Migrations
                     b.ToTable("Tags");
                 });
 
+            modelBuilder.Entity("BHC24.Api.Persistence.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -397,6 +433,36 @@ namespace BHC24.Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("OfferTag", b =>
+                {
+                    b.Property<int>("OffersId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("OffersId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("OfferTag");
+                });
+
+            modelBuilder.Entity("AppUserTag", b =>
+                {
+                    b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BHC24.Api.Persistence.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OfferTag", b =>
@@ -553,6 +619,26 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Profile", b =>
                 {
                     b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("OfferTag", b =>
+                {
+                    b.HasOne("BHC24.Api.Persistence.Models.Offer", null)
+                        .WithMany()
+                        .HasForeignKey("OffersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BHC24.Api.Persistence.Models.Offer", b =>
+                {
+                    b.Navigation("Collaborators");
                 });
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Project", b =>
