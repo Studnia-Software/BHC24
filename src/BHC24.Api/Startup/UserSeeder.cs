@@ -14,7 +14,6 @@ public class UserSeeder
         }
 
         var users = UserSeeder.GenerateFakeUsers(10, dbContext);
-
         dbContext.Users.AddRange(users);
         dbContext.SaveChanges();
     }
