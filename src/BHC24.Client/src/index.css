@@ -78,6 +78,10 @@ a {
     transition: color 0.3s ease;
   }
 
+  * {
+    transition: color 0.3s ease;
+  }
+
   &:hover, &:focus {
     color: var(--color-text) !important;
 
