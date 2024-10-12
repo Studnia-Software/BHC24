@@ -1,6 +1,6 @@
 namespace GithubClient.Interfaces;
 
-public class IGithubApi
+public partial interface IGithubClient
 {
     
 }
