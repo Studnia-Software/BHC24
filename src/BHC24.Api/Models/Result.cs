@@ -75,6 +75,16 @@ public class Result : ResultBase
             StatusCode = StatusCode.BadRequest
         };
     }
+
+    public static Result Forbidden()
+    {
+        return new Result
+        {
+            IsSuccess = false,
+            Message = "Forbidden",
+            StatusCode = StatusCode.Forbidden
+        };
+    }
 }
 
 public class Result<T> : ResultBase
@@ -100,6 +110,17 @@ public class Result<T> : ResultBase
             IsSuccess = false,
             Message = $"{entityName} was not found",
             StatusCode = StatusCode.NotFound
+        };
+    }
+    
+    public static Result<T> Forbidden<T>(string message) where T : class
+    {
+        return new Result<T>
+        {
+            Data = default,
+            IsSuccess = false,
+            Message = message,
+            StatusCode = StatusCode.Forbidden
         };
     }
 }
