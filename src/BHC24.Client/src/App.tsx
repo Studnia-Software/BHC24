@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage/HomePage.tsx";
 import { LoginPage } from './pages/Login/LoginPage.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RegisterPage } from './pages/Register/RegisterPage.tsx';
+import { ProfilePage } from './pages/Profile/ProfilePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             element: <RegisterPage />
           }
         ]
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />
       },
       {
         path: 'user/:id',
