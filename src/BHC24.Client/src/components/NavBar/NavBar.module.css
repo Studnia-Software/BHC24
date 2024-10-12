@@ -1,0 +1,20 @@
+.navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: var(--nav-bar-size);
+    padding: 0 calc((100dvw - 1200px) / 2);
+    background-color: var(--color-background);
+
+    ul {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: end;
+        align-items: center;
+        gap: 2rem;
+    }
+}
