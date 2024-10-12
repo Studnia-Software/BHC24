@@ -13,8 +13,10 @@ public class SeedingExtensions
       
         ArgumentNullException.ThrowIfNull(dbContext);
         
+        TagSeeder.Seed(dbContext);
         UserSeeder.Seed(dbContext);
-        //ProjectSeeder.Seed(dbContext);
+        ProjectSeeder.Seed(dbContext);
+        
         return builder;
     }
 }
