@@ -20,7 +20,12 @@ public class UserSeeder
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/JohnDoe123",
-                    LinkedInAccountUrl = "https://linkedin.com/in/JohnDoe"
+                    LinkedInAccountUrl = "https://linkedin.com/in/JohnDoe",
+        			Tags = new ICollection<Tags>
+						{
+							 dbContext.Tags.FirstOrDefault(t => t.Name == "html"),
+							dbContext.Tags.FirstOrDefault(t => t.Name == "css")
+						}
 				}
             },
             new()
@@ -29,7 +34,11 @@ public class UserSeeder
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/JaneSmith456",
-                    LinkedInAccountUrl = "https://linkedin.com/in/JaneSmith"
+                    LinkedInAccountUrl = "https://linkedin.com/in/JaneSmith",
+        			Tags = new ICollection<Tags>
+						{
+							 dbContext.Tags.FirstOrDefault(t => t.Name == "python")
+						}
                 }
             },
             new()
@@ -38,7 +47,13 @@ public class UserSeeder
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/SamAdams789",
-                    LinkedInAccountUrl = "https://linkedin.com/in/SamAdams"
+                    LinkedInAccountUrl = "https://linkedin.com/in/SamAdams",
+		          	    Tags = new ICollection<Tags>
+						{
+							 dbContext.Tags.FirstOrDefault(t => t.Name == "html"),
+							dbContext.Tags.FirstOrDefault(t => t.Name == "javascript")
+						}
+					
                 }
             }
         };
