@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import AnimatedMain from '../../components/AnimatedComps/AnimatedMain';
+import { useLogin } from '../../hooks/useLogin';
 
 interface IFormInput {
   email: string;
@@ -9,12 +11,18 @@ interface IFormInput {
 export function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-  const onSubmit = (data: IFormInput) => {
-    console.log('Form Submitted', data);
+  const submitLogin = useLogin();
+
+  const onSubmit = async (data: IFormInput) => {
+    const loginResult = await submitLogin.mutateAsync(data);
+
+    if(!loginResult.isSuccess) {
+      console.log("Login not succeeded");
+    }
   };
 
   return (
-    <div>
+    <AnimatedMain>
       <h1>Login Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -43,6 +51,6 @@ export function LoginPage() {
 
         <button type="submit">Submit</button>
       </form>
-    </div>
+    </AnimatedMain>
   );
 }
