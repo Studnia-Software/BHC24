@@ -5,24 +5,24 @@ import UserInfoPage from "./pages/UserInfoPage/UserInfoPage.tsx";
 import HomePage from "./pages/HomePage/HomePage.tsx";
 
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Root/>,
-        children: [{
-            index: true,
-            element: <HomePage/>
-        }, {
-            path: 'user',
-            children: [{
-                path: 'info',
-                element: <UserInfoPage/>
-            }]
-        }]
-    }
+  {
+    path: '/',
+    element: <Root/>,
+    children: [{
+      index: true,
+      element: <HomePage/>
+    }, {
+      path: 'user/:id',
+      children: [{
+        path: 'info',
+        element: <UserInfoPage/>
+      }]
+    }]
+  }
 ])
 
 function App() {
-    return <RouterProvider router={router}/>
+  return <RouterProvider router={router}/>
 }
 
 export default App

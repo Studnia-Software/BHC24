@@ -1,82 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
-    --color-background: #111;
-    --color-text: #fff;
-    --color-grey: #bbb;
-    --color-primary: #0BE657;
-    --font-text: 'Nunito';
-    --font-display: 'Bungee';
+  --color-background: #111;
+  --color-text: #fff;
+  --color-grey: #bbb;
+  --color-primary: #0BE657;
+  --font-text: 'Nunito';
+  --font-display: 'Bungee';
 
-    --nav-bar-size: 7rem;
+  --responsive-side-padding: calc((100vw - 1200px) / 2);
+  --nav-bar-size: 7rem;
 
-    font-size: clamp(12px, 1.5dvw, 16px);
+  font-size: clamp(12px, 1.5dvw, 16px);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: var(--color-background);
-    color: var(--color-text);
-    font-family: var(--font-text), sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: start;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-text), sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: start;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display), sans-serif;
-    color: var(--color-primary);
+  font-family: var(--font-display), sans-serif;
+  color: var(--color-primary);
 }
 
 h1 {
-    font-size: 3.815rem;
+  font-size: 2.986rem;
 }
 
 h2 {
-    font-size: 3.052rem;
+  font-size: 2.074rem;
 }
 
 h3 {
-    font-size: 2.441rem;
-}
-
-h4 {
-    font-size: 1.953rem;
-}
-
-h5 {
-    font-size: 1.563rem;
-}
-
-h6 {
-    font-size: 1.25rem;
+  font-size: 1.44rem;
 }
 
 a {
-    color: var(--color-primary);
-    text-decoration: none;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
 
-    &:hover, &:focus {
-        color: var(--color-text) !important;
-        transition: color 0.3s ease;
+  * {
+    transition: color 0.3s ease;
+  }
 
-        * {
-            color: var(--color-text) !important;
-            transition: color 0.3s ease;
-        }
+  &:hover, &:focus {
+    color: var(--color-text) !important;
+
+    * {
+      color: var(--color-text) !important;
     }
+  }
+
+  &.active {
+    color: var(--color-text) !important;
+
+    * {
+      color: var(--color-text) !important;
+    }
+  }
 }
 
 ul {
-    list-style: none;
+  list-style: none;
+}
+
+@media screen and (max-width: 1300px) {
+  :root {
+    --responsive-side-padding: 2rem;
+  }
 }
