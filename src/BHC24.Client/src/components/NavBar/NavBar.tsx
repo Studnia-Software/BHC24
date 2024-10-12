@@ -7,7 +7,7 @@ function NavBar(): JSX.Element {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 100) {
         setOnTop(false);
       } else {
         setOnTop(true);
@@ -25,9 +25,8 @@ function NavBar(): JSX.Element {
       <h2>Logo</h2>
       <ul>
         <li><NavLink to={'/'}><h3>Start</h3></NavLink></li>
-        <li><NavLink to={'/'}><h3>Menu 2</h3></NavLink></li>
-        <li><NavLink to={'/'}><h3>Menu 3</h3></NavLink></li>
-        <li><NavLink to={'/'}><h3>Menu 4</h3></NavLink></li>
+        <li><NavLink to={'/projects'}><h3>Odkrywaj</h3></NavLink></li>
+        <li><NavLink to={'/auth'}><h3>Zaloguj</h3></NavLink></li>
       </ul>
     </nav>
   );
