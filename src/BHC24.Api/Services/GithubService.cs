@@ -20,4 +20,9 @@ public class GithubService
         Console.WriteLine(JsonConvert.SerializeObject(data.ElementAt(0)));
         return data;
     }
+    
+    public async Task<IEnumerable<IssuesResponseModel>> GetIssueListAsync(string owner, string repo)
+    {
+        return await _client.GetIssueListAsync(owner, repo);
+    }
 }
