@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BHC24.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class RenewMigration : Migration
+    public partial class AddBogus : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,5 +1,6 @@
 ﻿using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
+using Bogus;
 
 namespace BHC24.Api.Startup;
 
@@ -11,66 +12,30 @@ public class UserSeeder
         {
             return;
         }
-        
-        var users = new AppUser[]
-        {
-            new()
-            {
-                UserName = "JohnDoe123",
-                Name = "John", Surname = "Doe",
-                Email = "john.doe@example.com",
-                PhoneNumber = "123456789",
-                PasswordHash = "password123",
-                Profile = new Profile()
-                {
-                    GithubAccountUrl = "https://github.com/JohnDoe123",
-                    LinkedInAccountUrl = "https://linkedin.com/in/JohnDoe",
-        			Tags = new List<Tag>
-						{
-							 dbContext.Tags.FirstOrDefault(t => t.Name == "html"),
-							dbContext.Tags.FirstOrDefault(t => t.Name == "css")
-						}
-				}
-            },
-            new()
-            {
-                UserName = "JaneSmith456",
-                Name = "Jane", Surname = "Smith",
-                Email = "jane.smith@example.com",
-                PhoneNumber = "987654321",
-                PasswordHash = "password456",
-                Profile = new Profile()
-                {
-                    GithubAccountUrl = "https://github.com/JaneSmith456",
-                    LinkedInAccountUrl = "https://linkedin.com/in/JaneSmith",
-        			Tags = new List<Tag>
-						{
-							 dbContext.Tags.FirstOrDefault(t => t.Name == "python")
-						}
-                }
-            },
-            new()
-            {
-                UserName = "SamAdams789",
-                Name = "Sam", Surname = "Adams",
-                Email = "sam.adams@example.com",
-                PhoneNumber = "555123456", 
-                PasswordHash = "password789",
-                Profile = new Profile()
-                {
-                    GithubAccountUrl = "https://github.com/SamAdams789",
-                    LinkedInAccountUrl = "https://linkedin.com/in/SamAdams",
-		          	    Tags = new List<Tag>
-						{
-							 dbContext.Tags.FirstOrDefault(t => t.Name == "html"),
-							dbContext.Tags.FirstOrDefault(t => t.Name == "javascript")
-						}
-					
-                }
-            }
-        };
+
+        var users = UserSeeder.GenerateFakeUsers(10, dbContext);
         
         dbContext.Users.AddRange(users);
         dbContext.SaveChanges();
     }
+    
+	    public static List<AppUser> GenerateFakeUsers(int count, BhcDbContext dbContext)
+	    {
+		    var tags = dbContext.Tags.ToList();
+		    var userFaker = new Faker<AppUser>()
+			    .RuleFor(u => u.UserName, f => f.Internet.UserName())
+			    .RuleFor(u => u.Name, f => f.Name.FirstName())
+			    .RuleFor(u => u.Surname, f => f.Name.LastName())
+			    .RuleFor(u => u.Email, f => f.Internet.Email())
+			    .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber())
+			    .RuleFor(u => u.PasswordHash, f => f.Internet.Password())
+			    .RuleFor(u => u.Profile, f => new Profile
+			    {
+				    GithubAccountUrl = f.Internet.Url(),
+				    LinkedInAccountUrl = f.Internet.Url(),
+				    Tags = f.PickRandom(tags, 2).ToList() 
+			    });
+
+		    return userFaker.Generate(count);
+	    }
 }
