@@ -1,5 +1,6 @@
 using BHC24.Api.Extensions;
 using BHC24.Api.Models;
+using BHC24.Api.Models.Offer;
 using BHC24.Api.Models.Projects;
 using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
@@ -58,6 +59,24 @@ public class ProjectController : ControllerBase
         
         return Ok();
     }
+    
+    [HttpPost("/{projectId}/offer")]
+    public async Task<Models.Response> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
+    {
+        var offer = new Offer
+        {
+            Title = request.Title,
+            Description = request.Description,
+            Collaborators = request.Collaborators,
+            Tags = request.Tags,
+            ProjectId = request.ProjectId
+        };
+
+        await _dbContext.Offers.AddAsync(offer, ct);
+        await _dbContext.SaveChangesAsync(ct);
+
+        return new Models.Response();
+    } 
     
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, AddProjectRequest request)
