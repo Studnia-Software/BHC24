@@ -1,3 +1,8 @@
 #root {
-    padding: calc(var(--nav-bar-size) + 3rem) calc((100vw - 1200px) / 2) 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: calc(var(--nav-bar-size) + 3rem) var(--responsive-side-padding) 5rem;
+    width: 100%;
 }
