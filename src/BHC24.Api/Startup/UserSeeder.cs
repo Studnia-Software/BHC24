@@ -1,4 +1,4 @@
-﻿using BHC24.Api.Persistence;
+using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
 using Bogus;
 
