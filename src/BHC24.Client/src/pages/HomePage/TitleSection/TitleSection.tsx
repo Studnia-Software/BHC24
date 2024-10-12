@@ -14,7 +14,9 @@ function TitleSection(): JSX.Element {
         <h1><span className={"text"}>Twoje projekty</span><br/>Twoja kariera</h1>
         <h4>Zadbajmy wspólnie o Twoje doświadczenie.</h4>
       </div>
+
       <DisplayButton onClick={() => navigate("/auth/register")} text={"Dołącz do nas"}/>
+
     </section>
   );
 }
