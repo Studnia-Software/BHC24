@@ -1,36 +1,58 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import AnimatedMain from '../../components/AnimatedComps/AnimatedMain';
-import { useLogin } from '../../hooks/useLogin';
+import { useRegister } from '../../hooks/useRegister';
 
 interface IFormInput {
+  name: string;
+  surname: string;
   email: string;
   password: string;
 }
 
-export function LoginPage() {
+export function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-  const submitLogin = useLogin();
+  const submitRegister = useRegister();
 
   const onSubmit = async (data: IFormInput) => {
-    const loginResult = await submitLogin.mutateAsync(data);
+    const registerResult = await submitRegister.mutateAsync(data);
 
-    if(!loginResult.isSuccess) {
-      console.log("Login not succeeded");
-    }
+    console.log(registerResult);
   };
 
   return (
     <AnimatedMain>
-      <h1>Login Form</h1>
+      <h1>Register Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>First name:</label>
+          <input
+            type="text"
+            {...register("name", {
+              required: "First name is required",
+            })}
+          />
+          {errors.name && <span>{errors.name.message}</span>}
+        </div>
+
+        <div>
+          <label>Last name:</label>
+          <input
+            type="text"
+            {...register("surname", {
+              required: "Last name is required",
+            })}
+          />
+          {errors.surname && <span>{errors.surname.message}</span>}
+        </div>
+
         <div>
           <label>Email:</label>
           <input
             type="email"
-            {...register("email", { 
-              required: "Email is required", 
+            {...register("email", {
+              required: "Email is required",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "Invalid email format"
