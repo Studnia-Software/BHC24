@@ -6,7 +6,6 @@ using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
 using BHC24.Api.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +26,7 @@ public class ProjectController : ControllerBase
     }
     
     [HttpGet, AllowAnonymous]
-    public async Task<IActionResult> GetList([FromQuery] PaginationRequest request)
+    public async Task<Result<PaginationResponse<GetProjectResponse>>> GetList([FromQuery] PaginationRequest request)
     {
         var projects = await _dbContext.Projects
             .Select(p => new GetProjectResponse
@@ -39,11 +38,11 @@ public class ProjectController : ControllerBase
             })
             .PaginateAsync(request);
         
-        return Ok(projects);
+        return Result.Ok(projects);
     }
     
     [HttpPost]
-    public async Task<IActionResult> Add(AddProjectRequest request)
+    public async Task<Result> Add(AddProjectRequest request)
     {
         var user = await _authUser.GetAsync();
         
@@ -56,12 +55,12 @@ public class ProjectController : ControllerBase
         
         _dbContext.Projects.Add(project);
         await _dbContext.SaveChangesAsync();
-        
-        return Ok();
+
+        return Result.Ok();
     }
     
     [HttpPost("/{projectId}/offer")]
-    public async Task<Models.Result> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
+    public async Task<Result> CreateOfferAsync([FromRoute] int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
     {
         var offer = new Offer
         {
@@ -74,11 +73,11 @@ public class ProjectController : ControllerBase
         await _dbContext.Offers.AddAsync(offer, ct);
         await _dbContext.SaveChangesAsync(ct);
 
-        return new Models.Result();
+        return Result.Ok();
     } 
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, AddProjectRequest request)
+    public async Task<Result> Update(int id, AddProjectRequest request)
     {
         var project = await _dbContext.Projects
             .Include(p => p.Owner)
@@ -87,24 +86,24 @@ public class ProjectController : ControllerBase
         
         if (project is null)
         {
-            return NotFound();
+            return Result.NotFound();
         }
         
         if (project.Owner.Id != (await _authUser.GetAsync()).Id)
         {
-            return Forbid();
+            return Result.Fail("You are not the owner of this project");
         }
         
         project.Title = request.Title;
         project.Description = request.Description;
         
         await _dbContext.SaveChangesAsync();
-        
-        return Ok();
+
+        return Result.Ok();
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<Result> Delete(int id)
     {
         var project = await _dbContext.Projects
             .Include(p => p.Owner)
@@ -113,17 +112,17 @@ public class ProjectController : ControllerBase
         
         if (project == null)
         {
-            return NotFound();
+            return Result.NotFound();
         }
         
         if (project.Owner.Id != (await _authUser.GetAsync()).Id)
         {
-            return Forbid();
+            return Result.Fail("You are not the owner of this project");
         }
         
         _dbContext.Projects.Remove(project);
         await _dbContext.SaveChangesAsync();
-        
-        return Ok();
+
+        return Result.Ok();
     }
 }
