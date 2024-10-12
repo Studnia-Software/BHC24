@@ -1,5 +1,5 @@
-import { useForm } from "react-hook-form";
-import { useLogin } from "../../hooks/useLogin";
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 interface IFormInput {
   email: string;
@@ -7,22 +7,41 @@ interface IFormInput {
 }
 
 export function LoginPage() {
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const loginSubmit = useLogin();
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
   const onSubmit = (data: IFormInput) => {
-    loginSubmit.mutate(data);
-  }
+    console.log('Form Submitted', data);
+  };
 
   return (
     <div>
-      <h1>Log in to continue</h1>
+      <h1>Login Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email</label>
-        <input type="email" {...register("email", { required: true })} />
-        <label>Password</label>
-        <input type="password" {...register("password", { required: true })} />
-        <input type="submit"/>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            {...register("email", { 
+              required: "Email is required", 
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format"
+              }
+            })}
+          />
+          {errors.email && <span>{errors.email.message}</span>}
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            {...register("password", { required: "Password is required" })}
+          />
+          {errors.password && <span>{errors.password.message}</span>}
+        </div>
+
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
