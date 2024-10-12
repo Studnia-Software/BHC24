@@ -10,6 +10,47 @@ export type StatusCode = {
   NOT_FOUND: 404,
 }
 
+export type PaginationResponse<T> = {
+  data: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
+
+export type UserModel = {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+}
+
+export type GetProfileResponse = {
+  githubAccountUrl: string;
+  linkedInAccountUrl: string;
+  profilePicture: string;
+  userCv: string;
+  description: string;
+  appUser: UserModel;
+  // tags: Tag[];
+}
+
+export type PaginationRequest = {
+  page: number;
+  pageSize: number;
+}
+
+export type GetProjectResponse = {
+  title: string;
+  description: string;
+  owner: string;
+  collaborators: string[];
+}
+
+export type AddProjectRequest = {
+  title: string;
+  description: string;
+}
+
 export type ApiResponse = {
   isSuccess: boolean;
   message: string;

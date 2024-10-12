@@ -4,4 +4,5 @@ export enum ApiRoutes {
   PROJECTS = 'project',
   OFFERS = 'offers',
   USERS = 'users',
+  PROFILE = 'profile'
 }
