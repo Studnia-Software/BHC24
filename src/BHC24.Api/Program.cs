@@ -1,5 +1,5 @@
 using BHC24.Api.Extensions;
-using BHC24.Api.Persitence;
+using BHC24.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -11,7 +11,7 @@ builder.AddSerilog();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<BHCDbContext>();
+builder.Services.AddDbContext<BhcDbContext>();
 
 
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policyBuilder =>
@@ -49,7 +49,7 @@ app.UseEndpoints(endpoints =>
 });
 
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetService<BHCDbContext>();
+var context = scope.ServiceProvider.GetService<BhcDbContext>();
 //context!.Database.Migrate();
 
 

@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace BHC24.Api.Persitence;
+namespace BHC24.Api.Persistence;
 
-public class BHCDbContext : DbContext
+public class BhcDbContext : DbContext
 {
-    public BHCDbContext()
+    public BhcDbContext()
     {
         
     }
     
-    public BHCDbContext(DbContextOptions<BHCDbContext> options) : base(options)
+    public BhcDbContext(DbContextOptions<BhcDbContext> options) : base(options)
     {
         
     }
