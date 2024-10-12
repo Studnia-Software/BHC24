@@ -96,6 +96,9 @@ builder.Services.AddAuthorization();
 builder.Services
     .AddScoped<AuthUserProvider>();
 
+builder.Services
+    .AddScoped<ChatgptService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddAntiforgery();
