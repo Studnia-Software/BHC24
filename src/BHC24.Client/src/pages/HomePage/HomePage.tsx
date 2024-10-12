@@ -1,15 +1,15 @@
 import {JSX} from "react";
-import {Link} from "react-router-dom";
-import AnimatedMain from "../../components/AnimatedMain/AnimatedMain.tsx";
+import AnimatedMain from "../../components/AnimatedComps/AnimatedMain.tsx";
+import TitleSection from "./TitleSection/TitleSection.tsx";
+import AboutSection from "./AboutSection/AboutSection.tsx";
 
 function HomePage(): JSX.Element {
-    return (
-        <AnimatedMain>
-            <h1>Home Page</h1>
-            <p>Welcome to the Home Page!</p>
-            <Link to={'/user/info'} >TAK</Link>
-        </AnimatedMain>
-    );
+  return (
+    <AnimatedMain>
+      <TitleSection/>
+      <AboutSection/>
+    </AnimatedMain>
+  );
 }
 
 export default HomePage;
