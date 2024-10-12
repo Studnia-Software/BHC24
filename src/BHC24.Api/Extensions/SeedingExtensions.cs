@@ -1,4 +1,5 @@
 ﻿using BHC24.Api.Persistence;
+using BHC24.Api.Startup;
 
 namespace BHC24.Api.Persistence.Models;
 
@@ -12,7 +13,7 @@ public class SeedingExtensions
       
         ArgumentNullException.ThrowIfNull(dbContext);
         
-        //UserSeeder.Seed(dbContext);
+        UserSeeder.Seed(dbContext);
         //ProjectSeeder.Seed(dbContext);
         return builder;
     }
