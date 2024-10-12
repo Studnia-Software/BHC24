@@ -10,7 +10,7 @@ interface AnimatedMainProps {
 function AnimatedMain({children}: AnimatedMainProps): JSX.Element {
   return (
     <motion.main variants={framerOpacityVariants} initial={FramerVariants.INITIAL}
-                 animate={FramerVariants.ANIMATE} exit={FramerVariants.EXIT} transition={{duration: 0.3}}>
+                 animate={FramerVariants.ANIMATE} exit={FramerVariants.EXIT} transition={{duration: 0.5}}>
       {children}
     </motion.main>
   );
