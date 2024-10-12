@@ -2,10 +2,6 @@ using BHC24.Api.Extensions;
 using BHC24.Api.Models;
 using BHC24.Api.Models.Offer;
 using BHC24.Api.Persistence;
-using BHC24.Api.Persistence.Models;
-using BHC24.Api.Models;
-using BHC24.Api.Response;
-using BHC24.Api.Response.Offer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

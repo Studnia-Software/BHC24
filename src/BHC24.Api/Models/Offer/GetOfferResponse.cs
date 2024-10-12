@@ -1,6 +1,6 @@
 using BHC24.Api.Persistence.Models;
 
-namespace BHC24.Api.Response.Offer;
+namespace BHC24.Api.Models.Offer;
 
 public class GetOfferResponse
 {
