@@ -20,6 +20,7 @@ public class BhcDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
 
     public DbSet<Investor> Investors => Set<Investor>();
     public DbSet<Offer> Offers => Set<Offer>();
+    public DbSet<Tag> Tags => Set<Tag>();
     
     public override int SaveChanges()
     {
