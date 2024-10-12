@@ -3,7 +3,7 @@ using BHC24.Api.Startup;
 
 namespace BHC24.Api.Persistence.Models;
 
-public class SeedingExtensions
+public static class SeedingExtensions
 {
     public static IApplicationBuilder SeedDatabase(this IApplicationBuilder builder)
     {

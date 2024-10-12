@@ -1,13 +1,13 @@
-﻿using Api.Persistence;
-using Api.Persistence.Models;
+﻿using BHC24.Api.Persistence;
+using BHC24.Api.Persistence.Models;
 
-namespace Api.Startup;
+namespace BHC24.Api.Startup;
 
 public class TagSeeder
 {
     public static void Seed(BhcDbContext dbContext)
     {
-        if (dbContext.Tag.Any())
+        if (dbContext.Tags.Any())
         {
             return;
         }
@@ -17,22 +17,22 @@ public class TagSeeder
             new()
             {
                 Name = "html"
-            }
+            },
 
             new()
             {
                 Name = "css"
-            }
+            },
             
             new()
             {
                 Name = "javascript"
-            }
+            },
             
             new()
             {
                 Name = "c#"
-            }
+            },
             
             new()
             {
@@ -40,7 +40,7 @@ public class TagSeeder
             }
         };
 
-        dbContext.Tag.AddRange(tags);
+        dbContext.Tags.AddRange(tags);
         dbContext.SaveChanges();
     }
 }
