@@ -3,6 +3,7 @@ using System;
 using BHC24.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    partial class BhcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241012174211_AddTagsToProject")]
+    partial class AddTagsToProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -230,11 +233,12 @@ namespace BHC24.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<string>("GithubRepositoryUrl")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("TagId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -246,8 +250,6 @@ namespace BHC24.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("Projects");
                 });
@@ -422,6 +424,21 @@ namespace BHC24.Api.Migrations
                     b.ToTable("OfferTag");
                 });
 
+            modelBuilder.Entity("ProjectTag", b =>
+                {
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProjectsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("ProjectTag");
+                });
+
             modelBuilder.Entity("AppUserTag", b =>
                 {
                     b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
@@ -473,10 +490,6 @@ namespace BHC24.Api.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
-                        .WithMany("Projects")
-                        .HasForeignKey("TagId");
 
                     b.Navigation("Owner");
                 });
@@ -554,6 +567,21 @@ namespace BHC24.Api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ProjectTag", b =>
+                {
+                    b.HasOne("BHC24.Api.Persistence.Models.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
                     b.Navigation("Profile")
@@ -570,11 +598,6 @@ namespace BHC24.Api.Migrations
                     b.Navigation("Collaborators");
 
                     b.Navigation("Offers");
-                });
-
-            modelBuilder.Entity("BHC24.Api.Persistence.Models.Tag", b =>
-                {
-                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

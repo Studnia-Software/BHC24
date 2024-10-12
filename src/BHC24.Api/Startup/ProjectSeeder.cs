@@ -19,6 +19,7 @@ public class ProjectSeeder
 	        {
 		        Title = "Project 1",
 		        Description = "Description 1",
+		        GithubRepositoryUrl = "SomeghURl",
 		        Owner = dbContext.Users.First(),
 		        Collaborators = new List<AppUser> { dbContext.Users.First() },
 		        Offers = new List<Offer>{}
@@ -41,6 +42,7 @@ public class ProjectSeeder
 						{
 							Title = "Project 2",
 							Description = "Description 2",
+							GithubRepositoryUrl = "SomeghURl2",
 							Owner = dbContext.Users.First(),
 							Collaborators = new List<AppUser> { dbContext.Users.First() },
 							Offers = new List<Offer>{ }
@@ -64,6 +66,7 @@ public class ProjectSeeder
 				{
 					Title = "Project 3",
 					Description = "Description 3",
+					GithubRepositoryUrl = "SomeghURl",
 					Owner = dbContext.Users.First(),
 					Collaborators = new List<AppUser> { dbContext.Users.First() },
 					Offers = new List<Offer>{ }
