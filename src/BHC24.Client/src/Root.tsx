@@ -1,9 +1,11 @@
 import {JSX} from "react";
-import {Outlet} from "react-router-dom";
+import AnimatedOutlet from "./components/AnimatedOutlet/AnimatedOutlet.tsx";
+import NavBar from "./components/NavBar/NavBar.tsx";
 
 function Root(): JSX.Element {
     return <>
-        <Outlet/>
+        <NavBar/>
+        <AnimatedOutlet/>
     </>
 }
 
