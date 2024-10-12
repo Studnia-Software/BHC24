@@ -1,0 +1,20 @@
+.authCon {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.changeWindowBox {
+  display: flex;
+  flex-direction: column;
+  max-width: 25rem;
+  gap: 3rem;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border: 0.1rem solid var(--color-primary);
+  border-radius: 2rem;
+}

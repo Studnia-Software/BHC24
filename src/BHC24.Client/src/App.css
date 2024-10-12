@@ -8,16 +8,25 @@
 
   main {
     width: 100%;
-    min-height: 100dvh;
+    min-height: calc(100dvh - var(--nav-bar-size));
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
     gap: 3rem;
-    padding: calc(var(--nav-bar-size) + 3rem) var(--responsive-side-padding) 5rem;
+    padding: 3rem var(--responsive-side-padding) 5rem;
 
     &:has(section) {
-      padding: var(--nav-bar-size) var(--responsive-side-padding) 5rem;
+      padding: 0 var(--responsive-side-padding) 5rem;
+    }
+
+    article {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      width: 100%;
     }
 
     section {
