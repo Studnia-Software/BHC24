@@ -8,4 +8,5 @@ public class AppUser : IdentityUser<Guid>
     public required string Surname { get; set; }
 
     public Profile Profile { get; set; }
+    public ICollection<Tag>? Tags { get; set; }
 }
