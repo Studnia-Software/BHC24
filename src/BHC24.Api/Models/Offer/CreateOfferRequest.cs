@@ -1,15 +1,14 @@
-using System.Reflection.Metadata.Ecma335;
+using BHC24.Api.Persistence.Models;
 
-namespace BHC24.Api.Persistence.Models;
+namespace BHC24.Api.Models.Offer;
 
-public class Offer : BaseTrackingEntity
+public class CreateOfferRequest
 {
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public ICollection<AppUser> Collaborators { get; set; } = [];
 
     public ICollection<Tag>? Tags { get; set; }
-    
-    public required int ProjectId { get; set; }
-    public Project? Project { get; set; }
+
+    public int ProjectId { get; set; }
 }
