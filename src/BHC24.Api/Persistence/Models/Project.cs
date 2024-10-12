@@ -4,6 +4,10 @@ public class Project : BaseTrackingEntity
 {
     public required string Title { get; set; }
     public required string Description { get; set; }
+    public required string GithubRepositoryUrl { get; set; }
+    
     public required AppUser Owner { get; set; }
     public ICollection<AppUser> Collaborators { get; set; } = [];
+    public ICollection<Offer> Offers { get; set; } = [];
+    public ICollection<Tag> Tags { get; set; } = [];
 }

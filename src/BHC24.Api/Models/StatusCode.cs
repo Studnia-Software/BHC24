@@ -5,4 +5,5 @@ public enum StatusCode
     Ok,
     BadRequest,
     NotFound,
+    Forbidden
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BHC24.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeProjectMapping : Migration
+    public partial class AddTagsToProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,6 +67,18 @@ namespace BHC24.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUserTag",
+                columns: table => new
+                {
+                    TagsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsersId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserTag", x => new { x.TagsId, x.UsersId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -120,9 +132,7 @@ namespace BHC24.Api.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Surname = table.Column<string>(type: "TEXT", nullable: false),
-                    OfferId = table.Column<int>(type: "INTEGER", nullable: true),
                     ProjectId = table.Column<int>(type: "INTEGER", nullable: true),
-                    TagId = table.Column<int>(type: "INTEGER", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -190,27 +200,6 @@ namespace BHC24.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    ProfileId = table.Column<int>(type: "INTEGER", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tags_Profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -218,8 +207,8 @@ namespace BHC24.Api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
+                    GithubRepositoryUrl = table.Column<string>(type: "TEXT", nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TagId = table.Column<int>(type: "INTEGER", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -232,10 +221,27 @@ namespace BHC24.Api.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Image = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    ProfileId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Tags_TagId",
-                        column: x => x.TagId,
-                        principalTable: "Tags",
+                        name: "FK_Tags_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
                         principalColumn: "Id");
                 });
 
@@ -263,6 +269,30 @@ namespace BHC24.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProjectTag",
+                columns: table => new
+                {
+                    ProjectsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TagsId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTag", x => new { x.ProjectsId, x.TagsId });
+                    table.ForeignKey(
+                        name: "FK_ProjectTag_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectTag_Tags_TagsId",
+                        column: x => x.TagsId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OfferTag",
                 columns: table => new
                 {
@@ -285,6 +315,11 @@ namespace BHC24.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserTag_UsersId",
+                table: "AppUserTag",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -318,19 +353,9 @@ namespace BHC24.Api.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_OfferId",
-                table: "AspNetUsers",
-                column: "OfferId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ProjectId",
                 table: "AspNetUsers",
                 column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_TagId",
-                table: "AspNetUsers",
-                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -360,14 +385,30 @@ namespace BHC24.Api.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_TagId",
-                table: "Projects",
-                column: "TagId");
+                name: "IX_ProjectTag_TagsId",
+                table: "ProjectTag",
+                column: "TagsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_ProfileId",
                 table: "Tags",
                 column: "ProfileId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AppUserTag_AspNetUsers_UsersId",
+                table: "AppUserTag",
+                column: "UsersId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AppUserTag_Tags_TagsId",
+                table: "AppUserTag",
+                column: "TagsId",
+                principalTable: "Tags",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserClaims_AspNetUsers_UserId",
@@ -394,24 +435,10 @@ namespace BHC24.Api.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Offers_OfferId",
-                table: "AspNetUsers",
-                column: "OfferId",
-                principalTable: "Offers",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Projects_ProjectId",
                 table: "AspNetUsers",
                 column: "ProjectId",
                 principalTable: "Projects",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Tags_TagId",
-                table: "AspNetUsers",
-                column: "TagId",
-                principalTable: "Tags",
                 principalColumn: "Id");
         }
 
@@ -419,12 +446,11 @@ namespace BHC24.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Profiles_AspNetUsers_AppUserId",
-                table: "Profiles");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Projects_AspNetUsers_OwnerId",
                 table: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "AppUserTag");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -448,22 +474,25 @@ namespace BHC24.Api.Migrations
                 name: "OfferTag");
 
             migrationBuilder.DropTable(
+                name: "ProjectTag");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Offers");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Profiles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
         }
     }
 }

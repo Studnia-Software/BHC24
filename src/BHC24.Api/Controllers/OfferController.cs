@@ -19,40 +19,40 @@ public class OfferController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<Response<PaginationResponse<GetOfferResponse>>> GetOffersAsync(PaginationRequest request, CancellationToken ct)
+    public async Task<Result<PaginationResponse<GetOfferResponse>>> GetOffersAsync([FromQuery] PaginationRequest request, CancellationToken ct)
     {
         var offers = await _dbContext.Offers
             .Select(o => new GetOfferResponse
             {
+                Id = o.Id,
                 Title = o.Title,
                 Description = o.Description,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
-                Collaborators = o.Collaborators,
                 Tags = o.Tags,
                 Project = o.Project
             }).PaginateAsync(request, ct);
 
-        return new Response<PaginationResponse<GetOfferResponse>>();
+        return Result.Ok(offers);
     }
     
     [HttpGet("{offerId}")]
-    public async Task<GetOfferResponse> GetOfferAsync([FromRoute]int offerId, CancellationToken ct)
+    public async Task<Result<GetOfferResponse>> GetOfferAsync([FromRoute]int offerId, CancellationToken ct)
     {
         var offer = await _dbContext.Offers
             .Where(o => o.Id == offerId)
             .Select(o => new GetOfferResponse
             {
+                Id = o.Id,
                 Title = o.Title,
                 Description = o.Description,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
-                Collaborators = o.Collaborators,
                 Tags = o.Tags,
                 Project = o.Project
-            }).SingleOrDefaultAsync(ct);
+            }).FirstOrDefaultAsync(ct);
 
-        return offer;
+        return Result.Ok(offer);
     }
     
     [HttpPut("{offerId}")]
@@ -62,7 +62,6 @@ public class OfferController : ControllerBase
             .Where(o => o.Id == offerId)
             .ExecuteUpdateAsync( b =>
                 b.SetProperty(o => o.Title, request.Title)
-                    .SetProperty(o => o.Collaborators, request.Collaborators)
                     .SetProperty(o => o.Tags, request.Tags));
         
         return Ok();
