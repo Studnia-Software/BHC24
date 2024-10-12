@@ -1,7 +1,7 @@
-export enum FramerPageSwapVariants {
-  INITIAL = "initial",
-  ANIMATE = "animate",
-  EXIT = "exit"
+export enum FramerVariants {
+    INITIAL = "initial",
+    ANIMATE = "animate",
+    EXIT = "exit"
 }
 
 export type StatusCode = {

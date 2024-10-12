@@ -1,4 +1,4 @@
-export const framerPageSwapVariants = {
+export const framerOpacityVariants = {
     initial: {
         opacity: 0,
     },

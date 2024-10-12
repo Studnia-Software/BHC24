@@ -7,7 +7,7 @@
     align-items: center;
     width: 100%;
     height: var(--nav-bar-size);
-    padding: 0 calc((100dvw - 1200px) / 2);
+    padding: 0 var(--responsive-side-padding);
     background-color: var(--color-background);
 
     ul {
