@@ -7,4 +7,6 @@ public class Tag : BaseTrackingEntity
     public ICollection<Offer>? Offers { get; set; }
     public ICollection<AppUser>? Users { get; set; }
     public ICollection<Project>? Projects { get; set; }
+    public byte[]? Image { get; set; }
+    
 }

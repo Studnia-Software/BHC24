@@ -6,4 +6,5 @@ public class Project : BaseTrackingEntity
     public required string Description { get; set; }
     public required AppUser Owner { get; set; }
     public ICollection<AppUser> Collaborators { get; set; } = [];
+    public ICollection<Offer> Offers { get; set; } = [];
 }
