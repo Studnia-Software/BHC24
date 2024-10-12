@@ -68,6 +68,8 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policyBuilder =>
         .AllowAnyHeader();
 }));
 
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
