@@ -16,6 +16,12 @@ public static class QueryableExtensions
     }
     
     public static async Task<PaginationResponse<TEntity>> PaginateAsync<TEntity>(
+        this IQueryable<TEntity> query, PaginationRequest request, CancellationToken ct = default)
+    {
+        return await query.PaginateAsync(request.Page, request.PageSize, ct);
+    }
+    
+    public static async Task<PaginationResponse<TEntity>> PaginateAsync<TEntity>(
         this IQueryable<TEntity> query, int page, int pageSize, CancellationToken ct = default)
     {
         var totalItems = await query.CountAsync(ct);
