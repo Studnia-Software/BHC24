@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { api } from "../utils/axiosInstance";
 import { ApiResponseData, LoginRequest } from "../utils/models";
 import urlJoin from "url-join";

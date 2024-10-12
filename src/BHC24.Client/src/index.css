@@ -14,16 +14,6 @@
   --responsive-side-padding: calc((100vw - 1200px) / 2);
   --nav-bar-size: 7rem;
 
-    font-size: clamp(12px, 1.5dvw, 16px);
-  --color-background: #111;
-  --color-text: #fff;
-  --color-grey: #bbb;
-  --color-primary: #0BE657;
-  --font-text: 'Nunito';
-  --font-display: 'Bungee';
-
-  --nav-bar-size: 7rem;
-
   font-size: clamp(12px, 1.5dvw, 16px);
 }
 
