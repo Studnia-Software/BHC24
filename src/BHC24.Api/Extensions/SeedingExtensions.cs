@@ -1,7 +1,7 @@
 ﻿using BHC24.Api.Persistence;
 using BHC24.Api.Startup;
 
-namespace BHC24.Api.Persistence.Models;
+namespace BHC24.Api.Extensions;
 
 public static class SeedingExtensions
 {

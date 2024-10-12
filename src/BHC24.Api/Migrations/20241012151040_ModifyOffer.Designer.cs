@@ -254,6 +254,9 @@ namespace BHC24.Api.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -426,7 +429,7 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Offer", b =>
                 {
                     b.HasOne("BHC24.Api.Persistence.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Offers")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -547,6 +550,8 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Project", b =>
                 {
                     b.Navigation("Collaborators");
+
+                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Tag", b =>

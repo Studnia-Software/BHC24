@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BHC24.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeProjectMapping : Migration
+    public partial class RenewMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -120,7 +120,6 @@ namespace BHC24.Api.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Surname = table.Column<string>(type: "TEXT", nullable: false),
-                    OfferId = table.Column<int>(type: "INTEGER", nullable: true),
                     ProjectId = table.Column<int>(type: "INTEGER", nullable: true),
                     TagId = table.Column<int>(type: "INTEGER", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -196,6 +195,7 @@ namespace BHC24.Api.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Image = table.Column<byte[]>(type: "BLOB", nullable: true),
                     ProfileId = table.Column<int>(type: "INTEGER", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
@@ -318,11 +318,6 @@ namespace BHC24.Api.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_OfferId",
-                table: "AspNetUsers",
-                column: "OfferId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ProjectId",
                 table: "AspNetUsers",
                 column: "ProjectId");
@@ -394,13 +389,6 @@ namespace BHC24.Api.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Offers_OfferId",
-                table: "AspNetUsers",
-                column: "OfferId",
-                principalTable: "Offers",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Projects_ProjectId",
                 table: "AspNetUsers",
                 column: "ProjectId",
@@ -451,10 +439,10 @@ namespace BHC24.Api.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "Offers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Projects");
