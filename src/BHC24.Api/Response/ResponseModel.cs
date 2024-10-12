@@ -1,6 +1,6 @@
 using BHC24.Api.Response.Interfaces;
 
-namespace KalkulatorWILKS.Api.Response;
+namespace BHC24.Api.Response;
 
 public class ResponseModel : IResponseModel
 {
