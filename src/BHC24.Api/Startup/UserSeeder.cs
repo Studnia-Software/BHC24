@@ -21,9 +21,8 @@ public class UserSeeder
     
 	    public static List<AppUser> GenerateFakeUsers(int count, BhcDbContext dbContext)
 	    {
-		    
 		    var tags = dbContext.Tags.ToList();
-		    var userFaker = new Faker<AppUser>("pl")
+		    var userFaker = new Faker<AppUser>()
 			    .RuleFor(u => u.UserName, f => f.Internet.UserName())
 			    .RuleFor(u => u.Name, f => f.Name.FirstName())
 			    .RuleFor(u => u.Surname, f => f.Name.LastName())
