@@ -60,7 +60,7 @@ public class ProjectController : ControllerBase
         return Ok();
     }
     
-    [HttpPost("/{projectId}/offers")]
+    [HttpPost("/{projectId}/offer")]
     public async Task<Models.Response> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
     {
         var offer = new Offer
