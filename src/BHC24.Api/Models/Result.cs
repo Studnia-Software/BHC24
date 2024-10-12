@@ -1,14 +1,17 @@
 namespace BHC24.Api.Models;
 
-public class Response
+public abstract class ResultBase
 {
     public bool IsSuccess { get; set; }
     public string? Message { get; set; }
-    public StatusCode StatusCode { get; set; }
-    
-    public static Response Ok()
+    public StatusCode StatusCode { get; set; } 
+}
+
+public class Result : ResultBase
+{
+    public static Result Ok()
     {
-        return new Response
+        return new Result
         {
             IsSuccess = true,
             Message = "Request successful",
@@ -16,9 +19,9 @@ public class Response
         };
     }
     
-    public static Response<T> Ok<T>(T data) where T : class
+    public static Result<T> Ok<T>(T? data)
     {
-        return new Response<T>
+        return new Result<T>
         {
             Data = data,
             IsSuccess = true,
@@ -27,9 +30,9 @@ public class Response
         };
     }
     
-    public static Response<T> Fail<T>(string message) where T : class
+    public static Result<T> Fail<T>(string message) where T : class
     {
-        return new Response<T>
+        return new Result<T>
         {
             IsSuccess = false,
             Message = message,
@@ -38,26 +41,26 @@ public class Response
     }
 }
 
-public class Response<T> : Response where T : class
+public class Result<T> : ResultBase
 {
-    public T Data { get; set; } = null!;
+    public T Data { get; set; } = default!;
     
-    public static Response<T> Fail(string message)
+    public static Result<T> Fail(string message)
     {
-        return new Response<T>
+        return new Result<T>
         {
-            Data = null!,
+            Data = default,
             IsSuccess = false,
             Message = message,
             StatusCode = StatusCode.BadRequest
         };
     }
     
-    public static Response<T> NotFound(string entityName)
+    public static Result<T> NotFound(string entityName)
     {
-        return new Response<T>
+        return new Result<T>
         {
-            Data = null!,
+            Data = default,
             IsSuccess = false,
             Message = $"{entityName} was not found",
             StatusCode = StatusCode.NotFound
