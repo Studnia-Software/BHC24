@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace BHC24.Api.Persistence.Models;
 
 public class Offer : BaseTrackingEntity
