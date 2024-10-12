@@ -7,7 +7,7 @@ public class ProjectSeeder
 {
     public static void Seed(BhcDbContext dbContext)
     {
-        if (dbContext.Project.Any())
+        if (dbContext.Projects.Any())
         {
             return;
         }
@@ -18,15 +18,15 @@ public class ProjectSeeder
             {
                 Title = "Project 1",
                 Description = "Description 1",
-                Owner = dbContext.AppUser.First(),
-                Collaborators = new ICollection<AppUser> { dbContext.AppUser.First() }
-				Offers = new ICollection<Offer> 
+                Owner = dbContext.Users.First(),
+                Collaborators = new List<AppUser> { dbContext.Users.First() },
+				Offers = new List<Offer> 
 				{ 
 						new Offer 
 								{ 
 									Title = "Offer 1",
 									Description = "Description 1",
-									Tags = new ICollection<Tag> 
+									Tags = new List<Tag> 
 										{ 
 												 dbContext.Tags.FirstOrDefault(t => t.Name == "python") 
 										}
@@ -37,9 +37,9 @@ public class ProjectSeeder
             {
                 Title = "Project 2",
                 Description = "Description 2",
-                Owner = dbContext.AppUser.First(),
-                Collaborators = new ICollection<AppUser> { dbContext.AppUser.First() }
-            	Offers = new ICollection<Offer> 
+                Owner = dbContext.Users.First(),
+                Collaborators = new List<AppUser> { dbContext.Users.First() },
+            	Offers = new List<Offer> 
 				{ 
 						new Offer 
 								{ 
@@ -57,15 +57,15 @@ public class ProjectSeeder
             {
                 Title = "Project 3",
                 Description = "Description 3",
-                Owner = dbContext.AppUser.First(),
-                Collaborators = new ICollection<AppUser> { dbContext.AppUser.First() }
-            	 Offers = new ICollection<Offer> 
+                Owner = dbContext.Users.First(),
+                Collaborators = new List<AppUser> { dbContext.Users.First() },
+            	 Offers = new List<Offer> 
 				{ 
 						new Offer 
 								{ 
 									Title = "Offer 3",
 									Description = "Description 3",
-									Tags = new ICollection<Tag> 
+									Tags = new List<Tag> 
 										{ 
 												 dbContext.Tags.FirstOrDefault(t => t.Name == "html")
 										} 
@@ -74,7 +74,7 @@ public class ProjectSeeder
 						{ 
 									Title = "Offer 4",
 									Description = "Description 4",
-									Tags = new ICollection<Tag> 
+									Tags = new List<Tag> 
 										{ 
 												 dbContext.Tags.FirstOrDefault(t => t.Name == "javascript")
 										} 
@@ -83,7 +83,7 @@ public class ProjectSeeder
 			}
         };
 
-        dbContext.Project.AddRange(projects);
+        dbContext.Projects.AddRange(projects);
         dbContext.SaveChanges();
     }
 }
