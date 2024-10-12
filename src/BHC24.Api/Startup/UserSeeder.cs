@@ -16,7 +16,11 @@ public class UserSeeder
         {
             new()
             {
-                UserName = "JohnDoe123", Name = "John", Surname = "Doe", Email = "john.doe@example.com", PhoneNumber = "123456789", PasswordHash = "password123",
+                UserName = "JohnDoe123",
+                Name = "John", Surname = "Doe",
+                Email = "john.doe@example.com",
+                PhoneNumber = "123456789",
+                PasswordHash = "password123",
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/JohnDoe123",
@@ -30,7 +34,11 @@ public class UserSeeder
             },
             new()
             {
-                UserName = "JaneSmith456", Name = "Jane", Surname = "Smith", Email = "jane.smith@example.com", PhoneNumber = "987654321", PasswordHash = "password456",
+                UserName = "JaneSmith456",
+                Name = "Jane", Surname = "Smith",
+                Email = "jane.smith@example.com",
+                PhoneNumber = "987654321",
+                PasswordHash = "password456",
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/JaneSmith456",
@@ -43,7 +51,11 @@ public class UserSeeder
             },
             new()
             {
-                UserName = "SamAdams789", Name = "Sam", Surname = "Adams", Email = "sam.adams@example.com", PhoneNumber = "555123456", PasswordHash = "password789",
+                UserName = "SamAdams789",
+                Name = "Sam", Surname = "Adams",
+                Email = "sam.adams@example.com",
+                PhoneNumber = "555123456", 
+                PasswordHash = "password789",
                 Profile = new Profile()
                 {
                     GithubAccountUrl = "https://github.com/SamAdams789",
