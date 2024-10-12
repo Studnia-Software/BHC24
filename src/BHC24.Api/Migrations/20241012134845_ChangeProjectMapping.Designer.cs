@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    [Migration("20241012123933_AddUserProfile")]
-    partial class AddUserProfile
+    [Migration("20241012134845_ChangeProjectMapping")]
+    partial class ChangeProjectMapping
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
