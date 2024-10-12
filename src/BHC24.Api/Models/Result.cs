@@ -5,6 +5,7 @@ public abstract class ResultBase
     public bool IsSuccess { get; set; }
     public string? Message { get; set; }
     public StatusCode StatusCode { get; set; }
+    public string Status => StatusCode.ToString().ToUpper();
 }
 
 public class Result : ResultBase
