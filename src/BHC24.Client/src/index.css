@@ -1,2 +1,3 @@
 :root {
+    font-size: clamp(12px, 1.5dvw, 16px);
 }
