@@ -3,6 +3,7 @@ using System;
 using BHC24.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    partial class BhcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241012121132_AddProjectTable")]
+    partial class AddProjectTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -174,9 +177,6 @@ namespace BHC24.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -185,8 +185,6 @@ namespace BHC24.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Projects");
                 });
@@ -341,17 +339,6 @@ namespace BHC24.Api.Migrations
                     b.Navigation("Investor");
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("BHC24.Api.Persistence.Models.Project", b =>
-                {
-                    b.HasOne("BHC24.Api.Persistence.Models.AppUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

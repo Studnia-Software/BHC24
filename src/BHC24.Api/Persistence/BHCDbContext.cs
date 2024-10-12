@@ -21,6 +21,7 @@ public class BhcDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     public DbSet<Investor> Investors => Set<Investor>();
     public DbSet<Offer> Offers => Set<Offer>();
     public DbSet<Tag> Tags => Set<Tag>();
+    public DbSet<Project> Projects => Set<Project>();
     
     public override int SaveChanges()
     {
