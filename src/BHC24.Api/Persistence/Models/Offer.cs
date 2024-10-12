@@ -6,7 +6,6 @@ public class Offer : BaseTrackingEntity
     public string Description { get; set; } = null!;
     public ICollection<AppUser> Collaborators { get; set; } = [];
 
-    public virtual ICollection<Tag>? Tags { get; set; }
-    public required Investor Investor { get; set; }
+    public ICollection<Tag>? Tags { get; set; }
     public required Project Project { get; set; }
 }
