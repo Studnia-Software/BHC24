@@ -4,9 +4,9 @@ import { ApiRoutes } from "../utils/apiRoutes";
 import urlJoin from "url-join";
 import { api } from "../utils/axiosInstance";
 
-export const useLogin = () => useMutation({
+export const useRegister = () => useMutation({
   mutationFn: async (data: RegisterRequest) => {
-    const url = urlJoin(ApiRoutes.AUTH, 'login');
+    const url = urlJoin(ApiRoutes.AUTH, 'register');
     return (await api.post<ApiResponseData<string>>(url, data)).data;
   }
 });
