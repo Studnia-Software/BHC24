@@ -61,7 +61,7 @@ public class ProjectController : ControllerBase
     }
     
     [HttpPost("/{projectId}/offer")]
-    public async Task<Models.Response> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
+    public async Task<Models.Result> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
     {
         var offer = new Offer
         {
@@ -75,7 +75,7 @@ public class ProjectController : ControllerBase
         await _dbContext.Offers.AddAsync(offer, ct);
         await _dbContext.SaveChangesAsync(ct);
 
-        return new Models.Response();
+        return new Models.Result();
     } 
     
     [HttpPut("{id}")]

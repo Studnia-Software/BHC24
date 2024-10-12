@@ -19,7 +19,7 @@ public class OfferController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<Response<PaginationResponse<GetOfferResponse>>> GetOffersAsync(PaginationRequest request, CancellationToken ct)
+    public async Task<Result<PaginationResponse<GetOfferResponse>>> GetOffersAsync([FromQuery] PaginationRequest request, CancellationToken ct)
     {
         var offers = await _dbContext.Offers
             .Select(o => new GetOfferResponse
@@ -33,11 +33,11 @@ public class OfferController : ControllerBase
                 Project = o.Project
             }).PaginateAsync(request, ct);
 
-        return new Response<PaginationResponse<GetOfferResponse>>();
+        return Result.Ok(offers);
     }
     
     [HttpGet("{offerId}")]
-    public async Task<GetOfferResponse> GetOfferAsync([FromRoute]int offerId, CancellationToken ct)
+    public async Task<Result<GetOfferResponse>> GetOfferAsync([FromRoute]int offerId, CancellationToken ct)
     {
         var offer = await _dbContext.Offers
             .Where(o => o.Id == offerId)
@@ -50,9 +50,9 @@ public class OfferController : ControllerBase
                 Collaborators = o.Collaborators,
                 Tags = o.Tags,
                 Project = o.Project
-            }).SingleOrDefaultAsync(ct);
+            }).FirstOrDefaultAsync(ct);
 
-        return offer;
+        return Result.Ok(offer);
     }
     
     [HttpPut("{offerId}")]
