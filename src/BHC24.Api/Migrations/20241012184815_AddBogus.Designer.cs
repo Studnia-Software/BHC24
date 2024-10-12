@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    [Migration("20241012183422_AddBogus")]
+    [Migration("20241012184815_AddBogus")]
     partial class AddBogus
     {
         /// <inheritdoc />
