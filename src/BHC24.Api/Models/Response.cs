@@ -1,4 +1,4 @@
-namespace BHC24.Api.Response;
+namespace BHC24.Api.Models;
 
 public class Response
 {
