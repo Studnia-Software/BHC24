@@ -3,6 +3,7 @@ using System;
 using BHC24.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,27 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    partial class BhcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241012123933_AddUserProfile")]
+    partial class AddUserProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
-
-            modelBuilder.Entity("AppUserTag", b =>
-                {
-                    b.Property<int>("TagsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TagsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("AppUserTag");
-                });
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
@@ -275,22 +263,16 @@ namespace BHC24.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-<<<<<<< HEAD
                     b.Property<int?>("ProfileId")
                         .HasColumnType("INTEGER");
 
-=======
->>>>>>> fa176c9 (Create tags)
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
                     b.HasIndex("ProfileId");
 
-=======
->>>>>>> fa176c9 (Create tags)
                     b.ToTable("Tags");
                 });
 
@@ -435,24 +417,6 @@ namespace BHC24.Api.Migrations
                     b.ToTable("OfferTag");
                 });
 
-<<<<<<< HEAD
-=======
-            modelBuilder.Entity("AppUserTag", b =>
-                {
-                    b.HasOne("BHC24.Api.Persistence.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BHC24.Api.Persistence.Models.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
->>>>>>> fa176c9 (Create tags)
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
                     b.HasOne("BHC24.Api.Persistence.Models.Offer", null)
@@ -578,21 +542,20 @@ namespace BHC24.Api.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
                     b.Navigation("Profile")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BHC24.Api.Persistence.Models.Profile", b =>
-                {
-                    b.Navigation("Tags");
-=======
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Offer", b =>
                 {
                     b.Navigation("Collaborators");
->>>>>>> fa176c9 (Create tags)
+                });
+
+            modelBuilder.Entity("BHC24.Api.Persistence.Models.Profile", b =>
+                {
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Project", b =>
@@ -603,11 +566,8 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Tag", b =>
                 {
                     b.Navigation("Projects");
-<<<<<<< HEAD
 
                     b.Navigation("Users");
-=======
->>>>>>> fa176c9 (Create tags)
                 });
 #pragma warning restore 612, 618
         }
