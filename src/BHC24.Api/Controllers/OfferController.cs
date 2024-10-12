@@ -3,15 +3,16 @@ using BHC24.Api.Models;
 using BHC24.Api.Models.Offer;
 using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
-using BHC24.Api.Response;
+using BHC24.Api.Models;
 using BHC24.Api.Response.Offer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHC24.Api.Controllers;
 
+[Route("api/[controller]")]
 [ApiController]
-public class OfferController : Controller
+public class OfferController : ControllerBase
 {
     private readonly BhcDbContext _dbContext;
 
@@ -19,7 +20,8 @@ public class OfferController : Controller
     {
         _dbContext = dbContext;
     }
-
+    
+    [HttpGet]
     public async Task<Response<PaginationResponse<GetOfferResponse>>> GetOffersAsync(PaginationRequest request, CancellationToken ct)
     {
         var offers = await _dbContext.Offers
@@ -37,7 +39,8 @@ public class OfferController : Controller
         return new Response<PaginationResponse<GetOfferResponse>>();
     }
     
-    public async Task<GetOfferResponse> GetOfferAsync(int offerId, CancellationToken ct)
+    [HttpGet("{offerId}")]
+    public async Task<GetOfferResponse> GetOfferAsync([FromRoute]int offerId, CancellationToken ct)
     {
         var offer = await _dbContext.Offers
             .Where(o => o.Id == offerId)
@@ -55,20 +58,34 @@ public class OfferController : Controller
         return offer;
     }
     
-    public async Task<Response.Response> CreateOfferAsync([FromRoute]int projectId, [FromBody]CreateOfferRequest request, CancellationToken ct)
+    [HttpPut("{offerId}")]
+    public async Task<IActionResult> UpdateOfferAsync([FromRoute]int offerId, [FromBody]UpdateOfferRequest request, CancellationToken ct)
     {
-        var offer = new Offer
+        var offer = await _dbContext.Offers
+            .Where(o => o.Id == offerId)
+            .ExecuteUpdateAsync( b =>
+                b.SetProperty(o => o.Title, request.Title)
+                    .SetProperty(o => o.Collaborators, request.Collaborators)
+                    .SetProperty(o => o.Tags, request.Tags));
+        
+        return Ok();
+    }
+    
+    [HttpDelete("{offerId}")]
+    public async Task<IActionResult> DeleteOfferAsync([FromRoute]int offerId, CancellationToken ct)
+    {
+        var offer = await _dbContext.Offers
+            .Where(o => o.Id == offerId)
+            .SingleOrDefaultAsync(ct);
+        
+        if (offer == null)
         {
-            Title = request.Title,
-            Description = request.Description,
-            Collaborators = request.Collaborators,
-            Tags = request.Tags,
-            ProjectId = request.ProjectId
-        };
-
-        await _dbContext.Offers.AddAsync(offer, ct);
+            return NotFound();
+        }
+        
+        _dbContext.Offers.Remove(offer);
         await _dbContext.SaveChangesAsync(ct);
-
-        return new Response.Response();
-    } 
+        
+        return Ok();
+    }
 }
