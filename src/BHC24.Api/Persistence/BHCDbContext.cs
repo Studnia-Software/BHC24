@@ -1,3 +1,4 @@
+using BHC24.Api.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHC24.Api.Persistence;
@@ -13,6 +14,8 @@ public class BhcDbContext : DbContext
     {
         
     }
+
+    public DbSet<Investor> Investors => Set<Investor>();
     
     public override int SaveChanges()
     {

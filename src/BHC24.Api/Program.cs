@@ -50,7 +50,7 @@ app.UseEndpoints(endpoints =>
 
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetService<BhcDbContext>();
-//context!.Database.Migrate();
+context!.Database.Migrate();
 
 
 app.Run();
