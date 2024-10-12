@@ -28,7 +28,6 @@ public class OfferController : ControllerBase
                 Description = o.Description,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
-                Collaborators = o.Collaborators,
                 Tags = o.Tags,
                 Project = o.Project
             }).PaginateAsync(request, ct);
@@ -47,7 +46,6 @@ public class OfferController : ControllerBase
                 Description = o.Description,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
-                Collaborators = o.Collaborators,
                 Tags = o.Tags,
                 Project = o.Project
             }).FirstOrDefaultAsync(ct);
@@ -62,7 +60,6 @@ public class OfferController : ControllerBase
             .Where(o => o.Id == offerId)
             .ExecuteUpdateAsync( b =>
                 b.SetProperty(o => o.Title, request.Title)
-                    .SetProperty(o => o.Collaborators, request.Collaborators)
                     .SetProperty(o => o.Tags, request.Tags));
         
         return Ok();

@@ -55,9 +55,6 @@ namespace BHC24.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("OfferId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT");
 
@@ -95,8 +92,6 @@ namespace BHC24.Api.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("OfferId");
 
                     b.HasIndex("ProjectId");
 
@@ -255,6 +250,9 @@ namespace BHC24.Api.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -416,10 +414,6 @@ namespace BHC24.Api.Migrations
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.AppUser", b =>
                 {
-                    b.HasOne("BHC24.Api.Persistence.Models.Offer", null)
-                        .WithMany("Collaborators")
-                        .HasForeignKey("OfferId");
-
                     b.HasOne("BHC24.Api.Persistence.Models.Project", null)
                         .WithMany("Collaborators")
                         .HasForeignKey("ProjectId");
@@ -432,7 +426,7 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Offer", b =>
                 {
                     b.HasOne("BHC24.Api.Persistence.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Offers")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -545,11 +539,6 @@ namespace BHC24.Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BHC24.Api.Persistence.Models.Offer", b =>
-                {
-                    b.Navigation("Collaborators");
-                });
-
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Profile", b =>
                 {
                     b.Navigation("Tags");
@@ -558,6 +547,8 @@ namespace BHC24.Api.Migrations
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Project", b =>
                 {
                     b.Navigation("Collaborators");
+
+                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("BHC24.Api.Persistence.Models.Tag", b =>

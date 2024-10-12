@@ -66,7 +66,6 @@ public class ProjectController : ControllerBase
         {
             Title = request.Title,
             Description = request.Description,
-            Collaborators = request.Collaborators,
             Tags = request.Tags,
             ProjectId = projectId
         };
