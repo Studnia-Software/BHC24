@@ -1,9 +1,12 @@
 using BHC24.Api.Persistence.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BHC24.Api.Persistence;
 
-public class BhcDbContext : DbContext
+public class BhcDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
 {
     public BhcDbContext()
     {
@@ -16,6 +19,7 @@ public class BhcDbContext : DbContext
     }
 
     public DbSet<Investor> Investors => Set<Investor>();
+    public DbSet<Offer> Offers => Set<Offer>();
     
     public override int SaveChanges()
     {

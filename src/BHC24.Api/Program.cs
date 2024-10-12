@@ -1,5 +1,7 @@
 using BHC24.Api.Extensions;
 using BHC24.Api.Persistence;
+using BHC24.Api.Persistence.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -12,6 +14,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<BhcDbContext>();
+
+builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 6;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<BhcDbContext>()
+    .AddDefaultTokenProviders();
 
 
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policyBuilder =>
