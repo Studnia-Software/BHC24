@@ -34,7 +34,9 @@ public class ProjectController : ControllerBase
                 Title = p.Title,
                 Description = p.Description,
                 Owner = p.Owner.UserName,
-                Collaborators = p.Collaborators.Select(c => c.UserName),
+                GithubUrl = p.GithubRepositoryUrl,
+                Collaborators = p.Collaborators,
+                Tags = p.Tags,
             })
             .PaginateAsync(request);
         
@@ -50,6 +52,7 @@ public class ProjectController : ControllerBase
         {
             Title = request.Title,
             Description = request.Description,
+            GithubRepositoryUrl = request.GithubUrl,
             Owner = user
         };
         
