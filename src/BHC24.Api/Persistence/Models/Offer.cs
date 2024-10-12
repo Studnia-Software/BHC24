@@ -6,7 +6,6 @@ public class Offer : BaseTrackingEntity
 {
     public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
-    public ICollection<AppUser> Collaborators { get; set; } = [];
 
     public ICollection<Tag>? Tags { get; set; }
     

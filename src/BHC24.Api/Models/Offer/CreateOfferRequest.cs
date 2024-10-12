@@ -9,6 +9,4 @@ public class CreateOfferRequest
     public ICollection<AppUser> Collaborators { get; set; } = [];
 
     public ICollection<Tag>? Tags { get; set; }
-
-    public int ProjectId { get; set; }
 }

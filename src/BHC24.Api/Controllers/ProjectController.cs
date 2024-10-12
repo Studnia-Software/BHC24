@@ -67,9 +67,8 @@ public class ProjectController : ControllerBase
         {
             Title = request.Title,
             Description = request.Description,
-            Collaborators = request.Collaborators,
             Tags = request.Tags,
-            ProjectId = request.ProjectId
+            ProjectId = projectId
         };
 
         await _dbContext.Offers.AddAsync(offer, ct);
