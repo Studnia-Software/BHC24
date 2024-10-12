@@ -2,6 +2,7 @@ using BHC24.Api.Extensions;
 using BHC24.Api.Models;
 using BHC24.Api.Models.Projects;
 using BHC24.Api.Persistence;
+using FuzzySharp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +19,11 @@ public class SearchController
         _dbContext = dbContext;
     }
     
-    [HttpGet("searchProjectByName")]
-    public async Task<Result<GetProjectResponse>> SearchProjectNameAsync([FromQuery]string projectName, CancellationToken ct)
+    [HttpGet("projectByName")]
+    public async Task<Result<PaginationResponse<GetProjectResponse>>> SearchProjectNameAsync([FromQuery] string projectName, [FromQuery] PaginationRequest pagination, CancellationToken ct)
     {
-       var project = await _dbContext.Projects
-           .Where(x => x.Title == projectName)
+       var paginatedProjects = await _dbContext.Projects
+           .Where(x => x.Title.ToLower().Contains(projectName.ToLower()))
            .Select(p => new GetProjectResponse
            {
                 Title = p.Title,
@@ -31,14 +32,11 @@ public class SearchController
                 Tags = p.Tags,
                 Collaborators = p.Collaborators
            })
-           .FirstOrDefaultAsync(ct);
+           .OrderBy(p => p.Title.Length - projectName.Length)
+           .PaginateAsync(pagination, ct);
 
-       if (project is not null)
-       {
-           return Result.Ok<GetProjectResponse>(project);
-       }
+       return Result.Ok(paginatedProjects);
 
-       return Result<GetProjectResponse>.NotFound("Project not found");
     }
     
     [HttpGet("searchProjectsByTags")]
