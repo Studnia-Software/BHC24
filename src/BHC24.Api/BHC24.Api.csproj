@@ -31,4 +31,8 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\GithubClient\GithubClient.csproj" />
+  </ItemGroup>
+
 </Project>
