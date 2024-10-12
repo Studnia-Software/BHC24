@@ -1,0 +1,17 @@
+.blurButton {
+  background-color: transparent;
+  border: 0.1rem solid var(--color-primary);
+  padding: 1rem 2rem;
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-family: var(--font-display), sans-serif;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(0.5rem);
+  margin: 2rem 0;
+  cursor: pointer;
+  transition: scale 0.3s ease;
+
+  &:hover {
+    scale: 1.05;
+  }
+}

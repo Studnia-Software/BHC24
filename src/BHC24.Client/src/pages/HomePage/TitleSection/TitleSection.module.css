@@ -1,0 +1,15 @@
+.titleSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: calc(100vh - var(--nav-bar-size));
+  gap: 3rem;
+}
+
+.textCon {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
