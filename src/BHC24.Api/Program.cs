@@ -3,6 +3,8 @@ using BHC24.Api.Extensions;
 using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
 using BHC24.Api.Services;
+using BHC24.Api.TempStorage;
+using GithubClient;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +49,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddDbContext<BhcDbContext>();
+builder.Services.AddGithubClient();
+
+builder.Services.AddScoped<GithubService>();
+builder.Services.AddSingleton<CommitListStorage>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
     {
