@@ -2,7 +2,6 @@ using BHC24.Api.Extensions;
 using BHC24.Api.Models;
 using BHC24.Api.Models.Projects;
 using BHC24.Api.Persistence;
-using FuzzySharp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
