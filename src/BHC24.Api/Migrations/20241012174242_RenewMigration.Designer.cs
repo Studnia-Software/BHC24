@@ -253,6 +253,8 @@ namespace BHC24.Api.Migrations
 
                     b.HasIndex("OwnerId");
 
+                    b.HasIndex("TagId");
+
                     b.ToTable("Projects");
                 });
 
