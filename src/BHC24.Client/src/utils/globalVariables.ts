@@ -9,3 +9,5 @@ export const framerPageSwapVariants = {
         opacity: 0,
     }
 }
+
+export const API_URL = 'https://localhost:7113/api/'
