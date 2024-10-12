@@ -11,4 +11,5 @@ public class Profile : BaseTrackingEntity
     public Guid AppUserId { get; set; }
     public AppUser AppUser { get; set; }
     public ICollection<Tag>? Tags { get; set; }
+    public ICollection<Project>? Projects { get; set; }
 }

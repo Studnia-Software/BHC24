@@ -13,7 +13,7 @@ public class UserSeeder
             return;
         }
 
-        var users = UserSeeder.GenerateFakeUsers(10, dbContext);
+        var users = UserSeeder.GenerateFakeUsers(60, dbContext);
         dbContext.Users.AddRange(users);
         dbContext.SaveChanges();
     }
