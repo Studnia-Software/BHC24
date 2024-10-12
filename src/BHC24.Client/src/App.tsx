@@ -7,6 +7,7 @@ import {LoginPage} from './pages/Auth/Login/LoginPage.tsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {RegisterPage} from './pages/Auth/Register/RegisterPage.tsx';
 import {ProfilePage} from './pages/Profile/ProfilePage.tsx';
+import { ProjectSearch } from './pages/ProjectSearch/ProjectSearch.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <ProfilePage/>
+      },
+      {
+        path: 'projects',
+        element: <ProjectSearch />
       },
       {
         path: 'user/:id',
