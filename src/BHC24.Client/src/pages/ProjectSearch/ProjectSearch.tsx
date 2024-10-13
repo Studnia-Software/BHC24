@@ -76,20 +76,22 @@ export function ProjectSearch() {
         <h3 style={{textAlign: 'center', marginBottom: '1rem'}}>Filtry</h3>
         <Divider/>
         <div>
-          <label>Tagi</label>
           <div style={{
             display: "flex",
-            gap: '0.25rem',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '3rem',
+            marginTop: '3rem',
           }}>
             {tags && tags.data?.map((tag) => (
               <div key={tag.name}
                    style={{
                      width: '5rem',
                      height: '5rem',
-                     padding: '0.5rem',
-                     backgroundColor: selectedTags.some(t => t.name === tag.name) ? 'var(--color-primary' : 'white',
+                     scale: selectedTags.some(t => t.name === tag.name) ? '.90' : '1',
                      borderRadius: '15%',
                      cursor: 'pointer',
+                     transition: 'scale .3s',
                    }}
                    onClick={() => {
                      setSelectedTags(prevSelectedTags => {
@@ -105,14 +107,14 @@ export function ProjectSearch() {
             ))}
           </div>
         </div>
-        <div>
-          <label>Właściciel</label>
-          <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)}/>
-        </div>
-        <div>
-          <label>Współpracownicy</label>
-          <input type="text" id="collaborators"/>
-        </div>
+        {/*<div>*/}
+        {/*  <label>Właściciel</label>*/}
+        {/*  <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)}/>*/}
+        {/*</div>*/}
+        {/*<div>*/}
+        {/*  <label>Współpracownicy</label>*/}
+        {/*  <input type="text" id="collaborators"/>*/}
+        {/*</div>*/}
       </div>
       <SearchResults/>
       <PaginationInput/>
