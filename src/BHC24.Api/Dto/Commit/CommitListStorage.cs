@@ -2,5 +2,5 @@ namespace BHC24.Api.TempStorage;
 
 public class CommitListStorage
 {
-    public IEnumerable<CommitResponseDto> Commits { get; set; } = [];
+    public List<CommitResponseDto> Commits { get; set; } = [];
 }

@@ -25,4 +25,9 @@ public class GithubService
     {
         return await _client.GetIssueListAsync(owner, repo);
     }
+    
+    public async Task<IEnumerable<PrResponseModel>> GetPrListAsync(string owner, string repo)
+    {
+        return await _client.GetPullRequestListAsync(owner, repo);
+    }
 }
