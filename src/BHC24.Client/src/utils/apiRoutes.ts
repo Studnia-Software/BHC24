@@ -5,5 +5,6 @@ export enum ApiRoutes {
   OFFERS = 'offers',
   USERS = 'users',
   PROFILE = 'profile',
-  SEARCH = 'search'
+  SEARCH = 'search',
+  TAGS = 'tag'
 }
