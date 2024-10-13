@@ -24,6 +24,18 @@ export type UserModel = {
   email: string;
 }
 
+export type GetProjectsRequest = {
+  projectName: string;
+  tags?: string[];
+  ownerName?: string;
+}
+
+export type GetTagResponse = {
+  id: number;
+  name: string;
+  imagePath: string;
+}
+
 export type GetProfileResponse = {
   githubAccountUrl: string;
   linkedInAccountUrl: string;

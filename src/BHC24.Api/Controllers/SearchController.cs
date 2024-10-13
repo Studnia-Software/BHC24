@@ -2,6 +2,7 @@ using BHC24.Api.Extensions;
 using BHC24.Api.Models;
 using BHC24.Api.Models.Projects;
 using BHC24.Api.Persistence;
+using BHC24.Api.Persistence.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,15 +20,37 @@ public class SearchController
     }
     
     [HttpGet("projectByName")]
-    public async Task<Result<PaginationResponse<GetProjectResponse>>> SearchProjectNameAsync([FromQuery] string projectName, [FromQuery] PaginationRequest pagination, CancellationToken ct)
+    public async Task<Result<PaginationResponse<GetProjectResponse>>> SearchProjects(
+        [FromQuery] string projectName, 
+        [FromQuery] string[]? tagNames,
+        [FromQuery] string? ownerName,
+        [FromQuery] PaginationRequest pagination, 
+        CancellationToken ct)
     {
-       var paginatedProjects = await _dbContext.Projects
-           .Where(x => x.Title.ToLower().Contains(projectName.ToLower()))
+        IQueryable<Project> projects = _dbContext.Projects;
+        
+        if(!string.IsNullOrEmpty(projectName))
+        {
+            projects = projects.Where(p => p.Title.ToLower().Contains(projectName.ToLower()));
+        }
+        
+        if(tagNames is { Length: > 0 })
+        {
+            projects = projects.Where(p => p.Tags.Any(t => tagNames.Contains(t.Name)));
+        }
+        
+        if(!string.IsNullOrEmpty(ownerName))
+        {
+            projects = projects.Where(p => p.Owner.Name.ToLower().Contains(ownerName.ToLower()));
+        }
+        
+        var paginatedProjects = await projects
            .Select(p => new GetProjectResponse
            {
                 Title = p.Title,
                 Description = p.Description,
                 Owner = p.Owner.Name,
+                GithubUrl = p.GithubRepositoryUrl,
                 Tags = p.Tags,
                 Collaborators = p.Collaborators
            })
@@ -35,29 +58,5 @@ public class SearchController
            .PaginateAsync(pagination, ct);
 
        return Result.Ok(paginatedProjects);
-    }
-    
-    [HttpGet("searchProjectsByTags")]
-    public async Task<Result<PaginationResponse<GetProjectResponse>>> SearchProjectByTagsAsync([FromQuery] PaginationRequest request, 
-        [FromQuery] string[] tagNames, CancellationToken ct)
-    {
-        var projects = await _dbContext.Projects.Where(p => p.Tags.Any(t => tagNames.Contains(t.Name)))
-            .Select(p => new GetProjectResponse
-            {
-                Title = p.Title,
-                Description = p.Description,
-                Owner = p.Owner.Name,
-                GithubUrl = p.GithubRepositoryUrl,
-                Tags = p.Tags,
-                Collaborators = p.Collaborators
-            })
-            .PaginateAsync(request, ct);
-        
-        if(projects.TotalCount == 0)
-        {
-            return Result<PaginationResponse<GetProjectResponse>>.NotFound("No projects found");
-        }
-        
-        return Result.Ok(projects);
     }
 }
