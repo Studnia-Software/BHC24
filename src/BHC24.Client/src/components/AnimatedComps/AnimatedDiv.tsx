@@ -4,8 +4,8 @@ import {FramerVariants} from "../../utils/models.ts";
 import {motion} from "framer-motion";
 
 interface AnimatedDivProps {
-  children: JSX.Element | JSX.Element[],
-  className?: any
+  children: JSX.Element | JSX.Element[] | string | string[] | number | number[]
+  className?: string
 }
 
 function AnimatedDiv({children, className}: AnimatedDivProps): JSX.Element {
