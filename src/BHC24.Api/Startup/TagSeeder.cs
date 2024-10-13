@@ -43,7 +43,13 @@ public class TagSeeder
             },
             new()
             {   
-                Name ="php"
+                Name ="python",
+                ImagePath = "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+            },
+            new()
+            {
+                Name = "php",
+                ImagePath = "https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"
             }
         };
 
