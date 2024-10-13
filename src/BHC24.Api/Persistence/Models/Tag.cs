@@ -1,3 +1,5 @@
+using System.Buffers.Text;
+
 namespace BHC24.Api.Persistence.Models;
 
 public class Tag : BaseTrackingEntity
@@ -7,5 +9,5 @@ public class Tag : BaseTrackingEntity
     public ICollection<Offer>? Offers { get; set; }
     public ICollection<AppUser>? Users { get; set; }
     public ICollection<Project>? Projects { get; set; }
-    public string ImagePath { get; set; }
+    public  string ImagePath { get; set; }
 }
