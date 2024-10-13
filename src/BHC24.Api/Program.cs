@@ -1,5 +1,6 @@
 using System.Text;
 using BHC24.Api.Dto.Issues;
+using BHC24.Api.Dto.PullRequest;
 using BHC24.Api.Extensions;
 using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
@@ -53,6 +54,8 @@ builder.Services.AddDbContext<BhcDbContext>();
 builder.Services.AddGithubClient();
 
 builder.Services.AddScoped<GithubService>();
+builder.Services.AddScoped<ChatgptService>();
+
 builder.Services.AddSingleton<CommitListStorage>();
 builder.Services.AddSingleton<IssuesListStorage>();
 
@@ -103,6 +106,13 @@ builder.Services.AddAuthorization();
 
 builder.Services
     .AddScoped<AuthUserProvider>();
+
+builder.Services.AddGithubClient();
+
+builder.Services.AddScoped<GithubService>();
+builder.Services.AddSingleton<CommitListStorage>();
+builder.Services.AddSingleton<IssuesListStorage>();
+builder.Services.AddSingleton<PrListStorage>();
 
 builder.Services
     .AddScoped<ChatgptService>();

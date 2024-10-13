@@ -1,0 +1,8 @@
+.paginationArrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-white);
+  font-size: 2rem;
+  margin-inline: 1rem;
+}

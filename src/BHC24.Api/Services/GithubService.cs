@@ -17,7 +17,6 @@ public class GithubService
     public async Task<IEnumerable<CommitResponseModel>> GetCommitListAsync(string owner, string repo)
     {
         var data = await _client.GetCommitListAsync(owner, repo);
-        Console.WriteLine(JsonConvert.SerializeObject(data.ElementAt(0)));
         return data;
     }
     
