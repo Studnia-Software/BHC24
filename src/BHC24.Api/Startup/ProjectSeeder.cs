@@ -17,7 +17,9 @@ public class ProjectSeeder
             .RuleFor(r => r.Title, f => string.Join(' ', f.Commerce.ProductName()))
             .RuleFor(r => r.Description, f => f.Commerce.ProductDescription())
             .RuleFor(r => r.GithubRepositoryUrl, f => f.Internet.Url())
-            .RuleFor(r => r.Owner, f => f.PickRandom(dbContext.Users.ToList()))
+            .RuleFor(r => r.Tags, f => f.PickRandom(dbContext.Tags.ToList(), f.Random.Number(1, 5)).ToList())
+            .RuleFor(r => r.Owner, f => f.PickRandom(dbContext.Users.ToList()).Profile)
+            .RuleFor(r => r.CollaboratorsCount, f => f.Random.Number(1, 35))
             .RuleFor(r => r.Collaborators, f => f.PickRandom(dbContext.Users.ToList(), f.Random.Number(1, 15)).ToList());
         
         dbContext.Projects.AddRange(projectFaker.Generate(500));

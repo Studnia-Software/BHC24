@@ -3,6 +3,7 @@ using System;
 using BHC24.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHC24.Api.Migrations
 {
     [DbContext(typeof(BhcDbContext))]
-    partial class BhcDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241013073058_SwitchFromUserToProfileOnProjects")]
+    partial class SwitchFromUserToProfileOnProjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -206,9 +209,6 @@ namespace BHC24.Api.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CollaboratorsCount")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")

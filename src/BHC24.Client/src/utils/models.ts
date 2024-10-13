@@ -43,7 +43,6 @@ export type GetProfileResponse = {
   userCv: string;
   description: string;
   appUser: UserModel;
-  // tags: Tag[];
 }
 
 export type PaginationRequest = {
@@ -55,7 +54,9 @@ export type GetProjectResponse = {
   title: string;
   description: string;
   owner: string;
+  collaboratorsCount: number;
   collaborators: string[];
+  tags: GetTagResponse[];
 }
 
 export type AddProjectRequest = {

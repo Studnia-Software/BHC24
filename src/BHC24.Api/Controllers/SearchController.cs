@@ -22,7 +22,7 @@ public class SearchController
     [HttpGet("projectByName")]
     public async Task<Result<PaginationResponse<GetProjectResponse>>> SearchProjects(
         [FromQuery] string projectName, 
-        [FromQuery] string[]? tagNames,
+        [FromQuery] string? tagNames,
         [FromQuery] string? ownerName,
         [FromQuery] PaginationRequest pagination, 
         CancellationToken ct)
@@ -34,14 +34,15 @@ public class SearchController
             projects = projects.Where(p => p.Title.ToLower().Contains(projectName.ToLower()));
         }
         
-        if(tagNames is { Length: > 0 })
+        if(!string.IsNullOrEmpty(tagNames))
         {
-            projects = projects.Where(p => p.Tags.Any(t => tagNames.Contains(t.Name)));
+            var splitTagNames = tagNames.Split(',');
+            projects = projects.Where(p => p.Tags.Any(t => splitTagNames.Contains(t.Name)));
         }
         
         if(!string.IsNullOrEmpty(ownerName))
         {
-            projects = projects.Where(p => p.Owner.Name.ToLower().Contains(ownerName.ToLower()));
+            projects = projects.Where(p => p.Owner.AppUser.UserName.ToLower().Contains(ownerName.ToLower()));
         }
         
         var paginatedProjects = await projects
@@ -49,10 +50,15 @@ public class SearchController
            {
                 Title = p.Title,
                 Description = p.Description,
-                Owner = p.Owner.Name,
+                Owner = p.Owner.AppUser.UserName,
                 GithubUrl = p.GithubRepositoryUrl,
-                Tags = p.Tags,
-                Collaborators = p.Collaborators
+                Tags = p.Tags.Select(t => new TagResponse
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    ImagePath = t.ImagePath
+                }),
+                CollaboratorsCount = p.CollaboratorsCount
            })
            .OrderBy(p => p.Title.Length - projectName.Length)
            .PaginateAsync(pagination, ct);

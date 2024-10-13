@@ -28,6 +28,21 @@ export function ProjectSearch() {
     refetch();
   }, [searchQuery, pagination, tags, ownerName, refetch]);
 
+  const TagBlock = ({ tag }: { tag: GetTagResponse }) => (
+    <div style={{
+      width: '5rem',
+      height: '5rem',
+      padding: '0.5rem',
+      backgroundColor: 'white',
+      borderRadius: '15%',
+      cursor: 'pointer',
+      userSelect: 'none',
+      
+    }}>
+      <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
+    </div>
+  );
+
   const SearchResults = () => (
     <div style={{width: '100%'}}>
       {isLoading && searchQuery !== '' && <p>Loading...</p>}
@@ -36,9 +51,15 @@ export function ProjectSearch() {
         <div key={index} style={{marginBlock: '1rem'}}>
           <h3 style={{color: 'var(--color-text)'}}>{project.title}</h3>
           <p>{project.description}</p>
-          <p>Właściciel: <a href='#' style={{textDecoration: 'underline'}}>{project.owner}</a></p>
-          <p>Współpracownicy: {project.collaborators.join(', ').length}</p>
-          <Divider/>
+
+          <p>Właściciel: <a href='#' style={{ textDecoration: 'underline' }}>{project.owner}</a></p>
+          <p>Współpracownicy: {project.collaboratorsCount}</p>
+          <div style={{ display: 'flex', gap: '0.5rem', marginBlock: '1rem' }}>
+            {project.tags.map(tag => (
+              <TagBlock key={tag.name} tag={tag} />
+            ))}
+          </div>
+          <Divider />
         </div>
       ))}
     </div>
@@ -85,24 +106,25 @@ export function ProjectSearch() {
           }}>
             {tags && tags.data?.map((tag) => (
               <div key={tag.name}
-                   style={{
-                     width: '5rem',
-                     height: '5rem',
-                     scale: selectedTags.some(t => t.name === tag.name) ? '.90' : '1',
-                     borderRadius: '15%',
-                     cursor: 'pointer',
-                     transition: 'scale .3s',
-                   }}
-                   onClick={() => {
-                     setSelectedTags(prevSelectedTags => {
-                       if (prevSelectedTags.some(t => t.name === tag.name)) {
-                         return prevSelectedTags.filter(t => t.name !== tag.name);
-                       } else {
-                         return [...prevSelectedTags, tag];
-                       }
-                     });
-                   }}>
-                <img src={tag.imagePath} style={{width: '100%', height: '100%'}}/>
+                style={{
+                  width: '5rem',
+                  height: '5rem',
+                  padding: '0.5rem',
+                  backgroundColor: selectedTags.some(t => t.name === tag.name) ? 'var(--color-primary' : 'white',
+                  borderRadius: '15%',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                }}
+                onClick={() => {
+                  setSelectedTags(prevSelectedTags => {
+                    if (prevSelectedTags.some(t => t.name === tag.name)) {
+                      return prevSelectedTags.filter(t => t.name !== tag.name);
+                    } else {
+                      return [...prevSelectedTags, tag];
+                    }
+                  });
+                }}>
+                <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
               </div>
             ))}
           </div>
