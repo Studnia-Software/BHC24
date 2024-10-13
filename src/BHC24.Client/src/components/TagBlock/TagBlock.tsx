@@ -11,6 +11,6 @@ export const TagBlock = ({ tag }: { tag: GetTagResponse }) => (
     userSelect: 'none',
     
   }}>
-    <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
+    <img src={'/' + tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
   </div>
 );

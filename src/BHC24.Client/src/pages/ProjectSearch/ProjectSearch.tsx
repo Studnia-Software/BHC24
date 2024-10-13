@@ -29,21 +29,6 @@ export function ProjectSearch() {
     refetch();
   }, [searchQuery, pagination, tags, ownerName, refetch]);
 
-  const TagBlock = ({ tag }: { tag: GetTagResponse }) => (
-    <div style={{
-      width: '5rem',
-      height: '5rem',
-      padding: '0.5rem',
-      backgroundColor: 'white',
-      borderRadius: '15%',
-      cursor: 'pointer',
-      userSelect: 'none',
-      
-    }}>
-      <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
-    </div>
-  );
-
   const SearchResults = () => (
     <div style={{width: '100%'}}>
       {isLoading && searchQuery !== '' && <p>Loading...</p>}
@@ -122,10 +107,6 @@ export function ProjectSearch() {
           <label>Właściciel</label>
           <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)}/>
         </div>
-        {/*<div>*/}
-        {/*  <label>Współpracownicy</label>*/}
-        {/*  <input type="text" id="collaborators"/>*/}
-        {/*</div>*/}
       </div>
       <SearchResults/>
       <PaginationInput/>
