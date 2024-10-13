@@ -26,54 +26,6 @@ export function ProjectSearch() {
     refetch();
   }, [searchQuery, pagination, tags, ownerName]);
 
-
-  const FilterSection = () => {
-    return (
-      <div style={{ width: '100%' }}>
-        <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>Filtry</h3>
-        <Divider />
-        <div>
-          <label>Tagi</label>
-          <div style={{
-            display: "flex",
-            gap: '0.25rem',
-          }}>
-            {tags && tags.data?.map((tag) => (
-              <div key={tag.name}
-                style={{
-                  width: '5rem',
-                  height: '5rem',
-                  padding: '0.5rem',
-                  backgroundColor: selectedTags.some(t => t.name === tag.name) ? 'var(--color-primary' : 'white',
-                  borderRadius: '15%',
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  setSelectedTags(prevSelectedTags => {
-                    if (prevSelectedTags.some(t => t.name === tag.name)) {
-                      return prevSelectedTags.filter(t => t.name !== tag.name);
-                    } else {
-                      return [...prevSelectedTags, tag];
-                    }
-                  });
-                }}>
-                <img src={tag.imagePath} style={{ width: '100%', height: '100%' }} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <label>Właściciel</label>
-          <input type="text" id="owner" onChange={(e) => setOwnerName(e.target.value)} />
-        </div>
-        <div>
-          <label>Współpracownicy</label>
-          <input type="text" id="collaborators" />
-        </div>
-      </div>
-    );
-  }
-
   const SearchResults = () => (
     <div style={{ width: '100%' }}>
       {isLoading && searchQuery !== '' && <p>Loading...</p>}
@@ -122,7 +74,48 @@ export function ProjectSearch() {
           fontSize: '1.5rem',
           color: 'var(--color-background)'
         }} />
-      <FilterSection />
+      <div style={{ width: '100%' }}>
+        <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>Filtry</h3>
+        <Divider />
+        <div>
+          <label>Tagi</label>
+          <div style={{
+            display: "flex",
+            gap: '0.25rem',
+          }}>
+            {tags && tags.data?.map((tag) => (
+              <div key={tag.name}
+                style={{
+                  width: '5rem',
+                  height: '5rem',
+                  padding: '0.5rem',
+                  backgroundColor: selectedTags.some(t => t.name === tag.name) ? 'var(--color-primary' : 'white',
+                  borderRadius: '15%',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  setSelectedTags(prevSelectedTags => {
+                    if (prevSelectedTags.some(t => t.name === tag.name)) {
+                      return prevSelectedTags.filter(t => t.name !== tag.name);
+                    } else {
+                      return [...prevSelectedTags, tag];
+                    }
+                  });
+                }}>
+                <img src={tag.imagePath} style={{ width: '100%', height: '100%' }} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label>Właściciel</label>
+          <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)} />
+        </div>
+        <div>
+          <label>Współpracownicy</label>
+          <input type="text" id="collaborators" />
+        </div>
+      </div>
       <SearchResults />
       <PaginationInput />
     </AnimatedMain>
