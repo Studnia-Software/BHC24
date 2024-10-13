@@ -26,6 +26,21 @@ export function ProjectSearch() {
     refetch();
   }, [searchQuery, pagination, tags, ownerName]);
 
+  const TagBlock = ({ tag }: { tag: GetTagResponse }) => (
+    <div style={{
+      width: '5rem',
+      height: '5rem',
+      padding: '0.5rem',
+      backgroundColor: 'white',
+      borderRadius: '15%',
+      cursor: 'pointer',
+      userSelect: 'none',
+      
+    }}>
+      <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
+    </div>
+  );
+
   const SearchResults = () => (
     <div style={{ width: '100%' }}>
       {isLoading && searchQuery !== '' && <p>Loading...</p>}
@@ -35,7 +50,12 @@ export function ProjectSearch() {
           <h3 style={{ color: 'var(--color-text)' }}>{project.title}</h3>
           <p>{project.description}</p>
           <p>Właściciel: <a href='#' style={{ textDecoration: 'underline' }}>{project.owner}</a></p>
-          <p>Współpracownicy: {project.collaborators.join(', ').length}</p>
+          <p>Współpracownicy: {project.collaboratorsCount}</p>
+          <div style={{ display: 'flex', gap: '0.5rem', marginBlock: '1rem' }}>
+            {project.tags.map(tag => (
+              <TagBlock key={tag.name} tag={tag} />
+            ))}
+          </div>
           <Divider />
         </div>
       ))}
@@ -92,6 +112,7 @@ export function ProjectSearch() {
                   backgroundColor: selectedTags.some(t => t.name === tag.name) ? 'var(--color-primary' : 'white',
                   borderRadius: '15%',
                   cursor: 'pointer',
+                  userSelect: 'none',
                 }}
                 onClick={() => {
                   setSelectedTags(prevSelectedTags => {
@@ -102,7 +123,7 @@ export function ProjectSearch() {
                     }
                   });
                 }}>
-                <img src={tag.imagePath} style={{ width: '100%', height: '100%' }} />
+                <img src={tag.imagePath} draggable='false' style={{ width: '100%', height: '100%' }} />
               </div>
             ))}
           </div>

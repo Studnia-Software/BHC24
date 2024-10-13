@@ -33,10 +33,15 @@ public class ProjectController : ControllerBase
             {
                 Title = p.Title,
                 Description = p.Description,
-                Owner = p.Owner.UserName,
+                Owner = p.Owner.AppUser.UserName,
                 GithubUrl = p.GithubRepositoryUrl,
-                Collaborators = p.Collaborators,
-                Tags = p.Tags,
+                CollaboratorsCount = p.CollaboratorsCount,
+                Tags = p.Tags.Select(t => new TagResponse
+                {
+                    Id = t.Id, 
+                    Name = t.Name, 
+                    ImagePath = t.ImagePath
+                })
             })
             .PaginateAsync(request);
         
@@ -53,7 +58,7 @@ public class ProjectController : ControllerBase
             Title = request.Title,
             Description = request.Description,
             GithubRepositoryUrl = request.GithubUrl,
-            Owner = user
+            Owner = user.Profile
         };
         
         _dbContext.Projects.Add(project);
@@ -92,7 +97,7 @@ public class ProjectController : ControllerBase
             return Result.NotFound();
         }
         
-        if (project.Owner.Id != (await _authUser.GetAsync()).Id)
+        if (project.Owner.AppUserId != (await _authUser.GetAsync()).Id)
         {
             return Result.Fail("You are not the owner of this project");
         }
@@ -118,7 +123,7 @@ public class ProjectController : ControllerBase
             return Result.NotFound();
         }
         
-        if (project.Owner.Id != (await _authUser.GetAsync()).Id)
+        if (project.Owner.AppUserId != (await _authUser.GetAsync()).Id)
         {
             return Result.Fail("You are not the owner of this project");
         }

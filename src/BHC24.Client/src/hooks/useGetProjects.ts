@@ -25,7 +25,7 @@ export function useGetProjects(request: GetProjectsRequest, paginationRequest: P
           projectName: request.projectName,
           page: paginationRequest.page,
           pageSize: paginationRequest.pageSize,
-          tagsNames: request.tags,
+          tagNames: request.tags?.join(','),
           ownerName: request.ownerName,
         }
       })).data;
