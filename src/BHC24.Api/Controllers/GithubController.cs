@@ -20,11 +20,12 @@ public class GithubController
     private readonly GithubService _githubService;
     private readonly BhcDbContext _dbContext;
     
-    public GithubController(GithubService githubService, CommitListStorage commitListStorage, IssuesListStorage issuesListStorage)
+    public GithubController(GithubService githubService, CommitListStorage commitListStorage, IssuesListStorage issuesListStorage, BhcDbContext dbContext)
     {
         _githubService = githubService;
         _commitListStorage = commitListStorage;
         _issuesListStorage = issuesListStorage;
+        _dbContext = dbContext;
     }
     
     [HttpGet("{projectId}/repo/commits")]
@@ -88,11 +89,11 @@ public class GithubController
         
         var issuesList = issues.Select(x => new IssuesResponseDto
         {
-            Title = x.Title,
-            Body = x.Body,
-            ClosedAt = x.ClosedAt,
-            CreatedAt = x.CreatedAt,
-            UpdatedAt = x.UpdatedAt
+            Title = x.title,
+            Body = x.body,
+            ClosedAt = x.closed_at,
+            CreatedAt = x.created_at,
+            UpdatedAt = x.updated_at
         });
         
         return Result.Ok();
@@ -108,14 +109,14 @@ public class GithubController
         
         var issuesList = issues.Select(x => new IssuesResponseDto
         {
-            Title = x.Title,
-            Body = x.Body,
-            ClosedAt = x.ClosedAt,
-            CreatedAt = x.CreatedAt,
-            UpdatedAt = x.UpdatedAt
+            Title = x.title,
+            Body = x.body,
+            ClosedAt = x.closed_at,
+            CreatedAt = x.created_at,
+            UpdatedAt = x.updated_at
         });
         
-        Console.WriteLine(issues.ElementAt(0).Url);
+        Console.WriteLine(issues.ElementAt(0).url);
         
         return Result.Ok(issuesList);
     }
