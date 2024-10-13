@@ -1,7 +1,7 @@
 import {JSX, useEffect, useState} from "react";
 import styles from "./NavBar.module.css";
 import {NavLink, useNavigate} from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../../public/logo.png";
 
 function NavBar(): JSX.Element {
   const [onTop, setOnTop] = useState<boolean>(true);
