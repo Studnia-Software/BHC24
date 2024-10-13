@@ -51,6 +51,7 @@ public class SearchController
                 Title = p.Title,
                 Description = p.Description,
                 Owner = p.Owner.AppUser.UserName,
+                OwnerId = p.Owner.AppUserId,
                 GithubUrl = p.GithubRepositoryUrl,
                 Tags = p.Tags.Select(t => new TagResponse
                 {

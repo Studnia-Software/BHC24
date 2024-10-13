@@ -7,6 +7,7 @@ public record GetProjectResponse
     public string Title { get; init; }
     public string Description { get; init; }
     public string Owner { get; init; }
+    public Guid OwnerId { get; init; }
     public string GithubUrl { get; init; }
     public int CollaboratorsCount { get; init; }
     public IEnumerable<TagResponse> Tags { get; init; }

@@ -8,6 +8,7 @@ import {GetTagResponse, PaginationRequest} from "../../utils/models";
 import {isLastPage} from "../../utils/helpers";
 import styles from './ProjectSearch.module.css';
 import {useGetTags as useGetTags} from "../../hooks/useGetTags";
+import { ProjectItem } from "../../components/ProjectItem";
 import AnimatedDiv from "../../components/AnimatedComps/AnimatedDiv.tsx";
 import {AnimatePresence} from "framer-motion";
 
@@ -48,19 +49,7 @@ export function ProjectSearch() {
       {isLoading && searchQuery !== '' && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {projects && searchQuery !== '' && projects.data?.data.map((project, index) => (
-        <div key={index} style={{marginBlock: '1rem'}}>
-          <h3 style={{color: 'var(--color-text)'}}>{project.title}</h3>
-          <p>{project.description}</p>
-
-          <p>Właściciel: <a href='#' style={{ textDecoration: 'underline' }}>{project.owner}</a></p>
-          <p>Współpracownicy: {project.collaboratorsCount}</p>
-          <div style={{ display: 'flex', gap: '0.5rem', marginBlock: '1rem' }}>
-            {project.tags.map(tag => (
-              <TagBlock key={tag.name} tag={tag} />
-            ))}
-          </div>
-          <Divider />
-        </div>
+        <ProjectItem key={index} project={project} />
       ))}
     </div>
   );
@@ -129,10 +118,10 @@ export function ProjectSearch() {
             ))}
           </div>
         </div>
-        {/*<div>*/}
-        {/*  <label>Właściciel</label>*/}
-        {/*  <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)}/>*/}
-        {/*</div>*/}
+        <div style={{ marginBlock: '2rem' }}>
+          <label>Właściciel</label>
+          <input type="text" id="ownerName" onChange={(e) => setOwnerName(e.target.value)}/>
+        </div>
         {/*<div>*/}
         {/*  <label>Współpracownicy</label>*/}
         {/*  <input type="text" id="collaborators"/>*/}
