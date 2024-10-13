@@ -31,7 +31,7 @@ public class ProjectSeeder
             .RuleFor(r => r.Owner, f => f.PickRandom(dbContext.Users.ToList()))
             .RuleFor(r => r.Collaborators, f => f.PickRandom(dbContext.Users.ToList(), f.Random.Number(1, 15)).ToList());
         
-        dbContext.Projects.AddRange(projectFaker.Generate(500));
+        dbContext.Projects.AddRange(projectFaker.Generate(10));
         dbContext.SaveChanges();
     }
 }

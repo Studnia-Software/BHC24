@@ -25,9 +25,11 @@ public class SearchController
            .Where(x => x.Title.ToLower().Contains(projectName.ToLower()))
            .Select(p => new GetProjectResponse
            {
+               Id = p.Id,
                 Title = p.Title,
                 Description = p.Description,
                 Owner = p.Owner.Name,
+                GithubUrl = p.GithubRepositoryUrl,
                 Tags = p.Tags,
                 Collaborators = p.Collaborators
            })
