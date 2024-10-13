@@ -35,7 +35,6 @@ public class SearchController
            .PaginateAsync(pagination, ct);
 
        return Result.Ok(paginatedProjects);
-
     }
     
     [HttpGet("searchProjectsByTags")]
