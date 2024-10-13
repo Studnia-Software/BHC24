@@ -1,5 +1,6 @@
 using BHC24.Api.Models;
 using BHC24.Api.Models.Profile;
+using BHC24.Api.Models.Projects;
 using BHC24.Api.Persistence;
 using BHC24.Api.Persistence.Models;
 using BHC24.Api.Services;
@@ -20,7 +21,7 @@ public class ProfileController : ControllerBase
         _dbContext = dbContext;
         _authUser = authUser;
     }
-    
+
     [HttpGet("{userId}")]
     public async Task<Result<GetProfileResponse>> GetProfileAsync([FromRoute] Guid userId, CancellationToken ct)
     {
@@ -33,23 +34,41 @@ public class ProfileController : ControllerBase
                 ProfilePicture = x.ProfilePicture,
                 UserCv = x.UserCv,
                 Description = x.Description,
-                AppUser = x.AppUser,
-                Tags = x.Tags
+                UserName = x.AppUser.Name,
+                FirstName = x.AppUser.Name,
+                LastName = x.AppUser.Surname,
+                Tags = x.Tags.Select(t => new TagResponse
+                    {
+                        Id = t.Id,
+                        Name = t.Name,
+                        ImagePath = t.ImagePath
+                    }
+                ).ToList(),
+                Projects = x.AppUser.Profile.Projects.Select(p => new GetProjectResponse
+                {
+                    Title = p.Title,
+                    Description = p.Description,
+                    Owner = p.Owner.AppUser.Name,
+                    OwnerId = p.Owner.AppUserId,
+                    GithubUrl = p.GithubRepositoryUrl,
+                    CollaboratorsCount = p.CollaboratorsCount,
+                    Tags = p.Tags.Select(t => new TagResponse
+                        {
+                            Id = t.Id,
+                            Name = t.Name,
+                            ImagePath = t.ImagePath
+                        }
+                    ).ToList(),
+                }).ToList()
             }).FirstOrDefaultAsync(ct);
-
-        if (profile.AppUser.Id != (await _authUser.GetAsync()).Id)
-        {
-            return Result<GetProfileResponse>.Forbidden<GetProfileResponse>("Forbidden");
-        }
-        
         return Result.Ok(profile);
     }
-    
+
     [HttpPost("/create")]
     public async Task<Result> CreateProfileAsync([FromBody] CreateProfileRequest request, CancellationToken ct)
     {
         var user = await _authUser.GetAsync();
-        
+
         var profile = new Profile
         {
             GithubAccountUrl = request.GithubAccountUrl,
@@ -60,13 +79,13 @@ public class ProfileController : ControllerBase
             AppUserId = user.Id,
             Tags = request.Tags
         };
-        
+
         _dbContext.Profiles.Add(profile);
         await _dbContext.SaveChangesAsync(ct);
-        
+
         return Result.Ok();
     }
-    
+
     [HttpPut("{userId}")]
     public async Task<Result> UpdateProfileAsync([FromRoute] Guid userId, [FromBody] UpdateProfileRequest request, CancellationToken ct)
     {
@@ -77,11 +96,11 @@ public class ProfileController : ControllerBase
 
         var tagsToAdd = new List<Tag>();
         tagsToAdd.AddRange(request.Tags);
-        
+
         var all_tags = await _dbContext.Profiles.Where(x => x.AppUserId == userId).SelectMany(x => x.Tags).ToListAsync(ct);
-        
+
         tagsToAdd.AddRange(all_tags);
-        
+
         var profile = await _dbContext.Profiles
             .Where(p => p.AppUserId == userId)
             .ExecuteUpdateAsync(b =>
@@ -91,10 +110,10 @@ public class ProfileController : ControllerBase
                     .SetProperty(p => p.UserCv, request.UserCv)
                     .SetProperty(p => p.Description, request.Description)
                     .SetProperty(p => p.Tags, tagsToAdd.Distinct()), ct);
-        
+
         return Result.Ok();
     }
-    
+
     [HttpDelete("{userId}")]
     public async Task<IActionResult> DeleteProfileAsync([FromRoute] Guid userId, CancellationToken ct)
     {
@@ -106,15 +125,15 @@ public class ProfileController : ControllerBase
         var profile = await _dbContext.Profiles
             .Where(p => p.AppUserId == userId)
             .SingleOrDefaultAsync(ct);
-        
+
         if (profile == null)
         {
             return NotFound();
         }
-        
+
         _dbContext.Profiles.Remove(profile);
         await _dbContext.SaveChangesAsync(ct);
-        
+
         return Ok();
     }
 }

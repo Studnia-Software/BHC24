@@ -34,6 +34,7 @@ public class ProjectController : ControllerBase
                 Title = p.Title,
                 Description = p.Description,
                 Owner = p.Owner.AppUser.UserName,
+                OwnerId = p.Owner.AppUserId,
                 GithubUrl = p.GithubRepositoryUrl,
                 CollaboratorsCount = p.CollaboratorsCount,
                 Tags = p.Tags.Select(t => new TagResponse
