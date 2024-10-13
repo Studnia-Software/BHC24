@@ -45,6 +45,7 @@ body {
   justify-content: center;
   align-items: start;
   width: calc(100vw - var(--scrollbar-width));
+  overflow-x: hidden;
 }
 
 h1,
