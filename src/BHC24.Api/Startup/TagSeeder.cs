@@ -33,11 +33,6 @@ public class TagSeeder
             },
             new()
             {
-                Name = "c#",
-                ImagePath = "src//img//csharp.png"
-            },
-            new()
-            {
                 Name = "java",
                 ImagePath = "src//img//java.png"
             },
