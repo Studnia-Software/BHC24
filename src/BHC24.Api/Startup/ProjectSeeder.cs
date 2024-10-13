@@ -13,6 +13,17 @@ public class ProjectSeeder
             return;
         }
 
+        Project project = new Project
+        {
+            Title = "BHC24",
+            Description = "BHC24 is a project management tool for developers",
+            GithubRepositoryUrl = "https://github.com/kollibroman/MangaLibrary",
+            Owner = dbContext.Users.First(),
+            Collaborators = dbContext.Users.Take(5).ToList()
+        };
+        
+        dbContext.Projects.Add(project);
+        
         Faker<Project> projectFaker = new Faker<Project>()
             .RuleFor(r => r.Title, f => string.Join(' ', f.Commerce.ProductName()))
             .RuleFor(r => r.Description, f => f.Commerce.ProductDescription())

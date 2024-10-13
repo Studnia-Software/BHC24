@@ -57,7 +57,7 @@ public class ChatgptService
     {
         var chatgptConfiguration = new OpenAIConfigurations
         {
-            ApiKey = "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",
+            ApiKey = "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",
             OrganizationId ="org-HEMkhE2id2uaM2lOTfLaWNKt"
         };
         
