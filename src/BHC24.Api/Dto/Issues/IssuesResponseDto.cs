@@ -5,7 +5,7 @@ public class IssuesResponseDto
     public string Url { get; set; }
     public string Title { get; set; }
     public string Body { get; set; }
-    public DateTime? ClosedAt { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public object? ClosedAt { get; set; }
+    public object? CreatedAt { get; set; }
+    public object? UpdatedAt { get; set; }
 }

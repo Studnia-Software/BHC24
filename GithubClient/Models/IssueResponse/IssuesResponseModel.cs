@@ -4,36 +4,34 @@ namespace GithubClient.Models;
 
 public class IssuesResponseModel
 {
-    public string NodeId { get; set; }
-    public string Url { get; set; }
-    public string RepositoryUrl { get; set; }
-    public string LabelsUrl { get; set; }
-    public string CommentsUrl { get; set; }
-    public string EventsUrl { get; set; }
-    public string HtmlUrl { get; set; }
-    public int Number { get; set; }
-    public string State { get; set; }
-    public string Title { get; set; }
-    public string Body { get; set; }
-    public User User { get; set; }
-    public List<Label> Labels { get; set; }
-    public User Assignee { get; set; }
-    public List<User> Assignees { get; set; }
-    public Milestone Milestone { get; set; }
-    public bool Locked { get; set; }
-    public string ActiveLockReason { get; set; }
-    public int Comments { get; set; }
-    public PullRequest PullRequest { get; set; }
+    [JsonProperty("url")]
+    public string url { get; set; }
+    public string repository_url { get; set; }
+    public string labels_url { get; set; }
+    public string comments_url { get; set; }
+    public string events_url { get; set; }
+    public string html_url { get; set; }
+    public string node_id { get; set; }
+    public int number { get; set; }
+    public string title { get; set; }
+    public User user { get; set; }
+    public List<Label> labels { get; set; }
+    public string state { get; set; }
+    public bool locked { get; set; }
+    public object assignee { get; set; }
+    public List<object> assignees { get; set; }
+    public Milestone milestone { get; set; }
+    public int comments { get; set; }
+    public object created_at { get; set; }
+    public object updated_at { get; set; }
+    public object closed_at { get; set; }
+    public string author_association { get; set; }
+    public object active_lock_reason { get; set; }
     
-    [JsonProperty("created_at")]
-    public DateTime? ClosedAt { get; set; }
-    
-    [JsonProperty("closed_at")]
-    public DateTime CreatedAt { get; set; }
-    
-    [JsonProperty("updated_at")]
-    public DateTime UpdatedAt { get; set; }
-    public User ClosedBy { get; set; }
-    public string AuthorAssociation { get; set; }
-    public string StateReason { get; set; }
+    [JsonProperty("body")]
+    public string body { get; set; }
+    public object closed_by { get; set; }
+    public string timeline_url { get; set; }
+    public object performed_via_github_app { get; set; }
+    public object state_reason { get; set; }
 }
